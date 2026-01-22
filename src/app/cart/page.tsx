@@ -1,9 +1,9 @@
-import styles from "./page.module.css";
-
-export default function CartPage() {
+function CartPage() {
   return (
-    <div className={styles.page}>
+    <div>
       <h1>Cart Page</h1>
     </div>
   );
 }
+
+export default CartPage;
