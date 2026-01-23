@@ -23,7 +23,7 @@ export async function getPhones(
       throw new Error('Invalid response structure');
     }
 
-    return data;
+    return data as PhoneListItem[];
   } catch (error) {
     console.error('Error fetching phones:', error);
     throw error;
