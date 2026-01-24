@@ -44,7 +44,7 @@ export async function GET(
   } catch (err: unknown) {
     const isAbort = err instanceof Error && err.name === 'AbortError';
 
-    console.error('Phones API error:', {
+    console.error('Phone Detail API error:', {
       isAbort,
       error: err instanceof Error ? err.message : 'Unknown error',
       timestamp: new Date().toISOString(),
