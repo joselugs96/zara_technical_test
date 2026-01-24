@@ -1,0 +1,178 @@
+@import '@/styles/tokens';
+@import '@/styles/mixins';
+
+.phoneCard {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.phoneCardContent {
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    background-color: #000;
+    transition: height 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    height: 100%;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
+}
+
+.phoneCard:nth-child(4n) .phoneCardContent {
+  border-right: none;
+}
+
+.phoneCard:nth-last-child(-n + 4) .phoneCardContent {
+  border-bottom: none;
+}
+
+@include respond-to('wide') {
+  .phoneCard:nth-child(4n) .phoneCardContent {
+    border-right: 1px solid #000;
+  }
+
+  .phoneCard:nth-child(5n) .phoneCardContent {
+    border-right: none;
+  }
+
+  .phoneCard:nth-last-child(-n + 4) .phoneCardContent {
+    border-bottom: 1px solid #000;
+  }
+
+  .phoneCard:nth-last-child(-n + 5) .phoneCardContent {
+    border-bottom: none;
+  }
+}
+
+@include respond-to('tablet') {
+  .phoneCard:nth-child(4n) .phoneCardContent {
+    border-right: 1px solid #000;
+  }
+
+  .phoneCard:nth-child(2n) .phoneCardContent {
+    border-right: none;
+  }
+
+  .phoneCard:nth-last-child(-n + 4) .phoneCardContent {
+    border-bottom: 1px solid #000;
+  }
+
+  .phoneCard:nth-last-child(-n + 2) .phoneCardContent {
+    border-bottom: none;
+  }
+}
+
+@include respond-to('mobile') {
+  .phoneCard:nth-child(1n) .phoneCardContent {
+    border-right: none;
+  }
+
+  .phoneCard:nth-last-child(-n + 1) .phoneCardContent {
+    border-bottom: none;
+  }
+}
+
+.phoneImage {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.phoneImage img {
+  object-fit: contain;
+}
+
+.phoneImageDefault {
+  transform: scale(0.75);
+}
+
+.phoneImageRedmi {
+  transform: scale(0.55);
+}
+.phoneInfo {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.phoneBrand {
+  color: #79736d;
+  font-size: 12px;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1.2;
+  transition: color 0.4s ease;
+
+  .phoneCardContent:hover & {
+    color: #e0e0e0;
+  }
+}
+
+.phoneNameAndPrice {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: flex-end;
+  margin-top: 4px;
+}
+
+.phoneName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+  color: #000;
+  line-height: 1.3;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+
+  .phoneCardContent:hover & {
+    color: #fff;
+  }
+}
+
+.phonePrice {
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  white-space: nowrap;
+  transition: color 0.4s ease;
+
+  .phoneCardContent:hover & {
+    color: #fff;
+  }
+}

@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { getPhones } from '@/features/phones/services/phones.service';
 import PhoneGrid from '@/features/phones/components/PhoneGrid';
+import styles from './page.module.scss';
 
 function getBaseUrlFromHeaders() {
   const h = headers();
@@ -22,15 +23,13 @@ async function HomePage() {
     const phones = await getPhones(baseUrl, { limit: 20 });
 
     return (
-      <main
-        style={{ padding: '40px 24px', maxWidth: '1400px', margin: '0 auto' }}
-      >
+      <main className={styles.container}>
         <PhoneGrid phones={phones} />
       </main>
     );
   } catch (error) {
     return (
-      <main style={{ padding: 24 }}>
+      <main className={styles.container}>
         <h1>Error</h1>
         <p>
           {error instanceof Error ? error.message : 'Error al cargar teléfonos'}

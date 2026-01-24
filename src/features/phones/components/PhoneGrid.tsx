@@ -1,32 +1,29 @@
+import { Suspense } from 'react';
 import { PhoneGridProps } from '@/features/phones/lib/types';
 import PhoneCard from './PhoneCard';
+import styles from './PhoneGrid.module.scss';
 
-function PhoneGrid({ phones }: PhoneGridProps) {
+function PhoneGridContent({ phones }: PhoneGridProps) {
   return (
-    <section aria-label="Catálogo de teléfonos">
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: 16,
-          marginBottom: 24,
-        }}
-      >
+    <>
+      <div className={styles.phoneGrid}>
         {phones.map((phone) => (
           <PhoneCard key={phone.id} phone={phone} />
         ))}
       </div>
+    </>
+  );
+}
 
-      <p
-        style={{
-          color: '#999',
-          marginTop: 32,
-          textAlign: 'center',
-          fontSize: 13,
-        }}
-      >
-        Total: {phones.length} teléfonos disponibles
-      </p>
+function PhoneGrid({ phones }: PhoneGridProps) {
+  return (
+    <section
+      aria-label="Catálogo de teléfonos"
+      className={styles.phoneGridContainer}
+    >
+      <Suspense fallback={<div />}>
+        <PhoneGridContent phones={phones} />
+      </Suspense>
     </section>
   );
 }
