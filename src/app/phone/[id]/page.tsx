@@ -1,5 +1,6 @@
 import { headers } from 'next/headers';
 import { getPhoneDetail } from '@/features/phone-detail/services/phoneDetail.service';
+import PhoneDetailContent from '@/features/phone-detail/components/PhoneDetailContent';
 
 type PhoneDetailPageProps = {
   params: {
@@ -28,20 +29,8 @@ export default async function PhoneDetailPage({
   const phone = await getPhoneDetail(baseUrl, params.id);
 
   return (
-    <main style={{ padding: 24 }}>
-      <h1>{phone.name}</h1>
-
-      <pre
-        style={{
-          marginTop: 16,
-          padding: 12,
-          background: '#f6f6f6',
-          borderRadius: 8,
-          overflowX: 'auto',
-        }}
-      >
-        {JSON.stringify(phone, null, 2)}
-      </pre>
+    <main className="container">
+      <PhoneDetailContent phone={phone} />
     </main>
   );
 }

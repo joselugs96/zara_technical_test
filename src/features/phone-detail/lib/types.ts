@@ -40,3 +40,14 @@ export interface PhoneDetail {
   storageOptions: PhoneStorageOption[];
   similarProducts: SimilarProduct[];
 }
+
+export interface PhoneInfoProps {
+  phone: PhoneDetail;
+  onColorChange?: (colorName: string) => void;
+}
+
+export interface PhoneGalleryProps {
+  imageUrl: string;
+  brand: string;
+  name: string;
+}

@@ -1,0 +1,141 @@
+@import '@/styles/tokens';
+@import '@/styles/mixins';
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 50px 0;
+}
+
+@include respond-to('mobile') {
+  .productInfo {
+    padding-top: 0;
+  }
+}
+
+@include respond-to('small-tablet') {
+  .productInfo {
+    padding-top: 0;
+  }
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 100;
+  margin: 0;
+  text-transform: uppercase;
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 100;
+  color: #000;
+  margin-top: 10px;
+}
+
+.priceFade {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0;
+}
+
+.sectionCapacity {
+  margin-top: 40px;
+}
+
+.optionsCapacityGrid {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.optionCapacityButton {
+  min-width: 110px;
+  padding: 20px 25px;
+  border: 1px solid #cccccc;
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.5s ease;
+
+  &.active {
+    border-color: #000;
+  }
+}
+
+.sectionColor {
+  margin-top: 40px;
+}
+
+.colorGrid {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  margin-left: 5px;
+}
+
+.colorButton {
+  width: 23px;
+  height: 23px;
+  border: 1px solid #000000;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  padding: 5px;
+  background-color: transparent;
+  position: relative;
+  box-shadow:
+    0 0 0 2px white,
+    0 0 0 3px #cccccc;
+
+  &.active {
+    box-shadow:
+      0 0 0 2px white,
+      0 0 0 3px #000;
+  }
+}
+
+.addToCartButton {
+  width: 100%;
+  padding: 26px 16px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 100;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  margin-top: 50px;
+
+  &:hover {
+    background-color: #333;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    color: #000;
+    cursor: not-allowed;
+  }
+}

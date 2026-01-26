@@ -1,0 +1,58 @@
+.specificationsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+  color: #000;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.specsTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  padding: 16px 0;
+  border-bottom: 1px solid #e0e0e0;
+  gap: 20px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.specLabel {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #000;
+  letter-spacing: 0.5px;
+}
+
+.specValue {
+  font-size: 14px;
+  font-weight: 300;
+  color: #666;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .specRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .specLabel {
+    font-weight: 600;
+  }
+}
