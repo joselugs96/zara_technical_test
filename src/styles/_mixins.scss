@@ -3,12 +3,12 @@
     @media (max-width: $breakpoint-mobile) {
       @content;
     }
-  } @else if $breakpoint == 'tablet' {
-    @media (max-width: $breakpoint-tablet) {
+  } @else if $breakpoint == 'small-tablet' {
+    @media (max-width: $breakpoint-small-tablet) {
       @content;
     }
-  } @else if $breakpoint == 'desktop' {
-    @media (max-width: $breakpoint-desktop) {
+  } @else if $breakpoint == 'tablet' {
+    @media (max-width: $breakpoint-tablet) {
       @content;
     }
   } @else if $breakpoint == 'wide' {
