@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { PhoneCardProps } from '@/features/phones/lib/types';
 import styles from './PhoneCard.module.scss';
 import Image from 'next/image';
+import { ROUTES } from '@/shared/lib/routes';
 
 function PhoneCard({ phone }: PhoneCardProps) {
   const isRedmi =
@@ -9,7 +10,7 @@ function PhoneCard({ phone }: PhoneCardProps) {
     phone.name.toLowerCase().includes('redmi');
 
   return (
-    <Link href={`/phone/${phone.id}`} className={styles.phoneCard}>
+    <Link href={ROUTES.phoneDetail(phone.id)} className={styles.phoneCard}>
       <article className={styles.phoneCardContent}>
         <div className={styles.phoneImage}>
           <Image

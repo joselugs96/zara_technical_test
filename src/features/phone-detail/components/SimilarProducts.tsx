@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SimilarProducts.module.scss';
 import { SimilarProduct } from '@/features/phone-detail/lib/types';
+import { ROUTES } from '@/shared/lib/routes';
 
 interface SimilarProductsProps {
   products: SimilarProduct[];
@@ -29,7 +30,7 @@ function SimilarProducts({ products }: SimilarProductsProps) {
         {products.map((product) => (
           <Link
             key={product.id}
-            href={`/phone/${product.id}`}
+            href={ROUTES.phoneDetail(product.id)}
             className={styles.productCard}
           >
             <article className={styles.productsContent}>
