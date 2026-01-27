@@ -147,20 +147,20 @@
   }
 }
 .productCard {
+  &:nth-child(-n + 4) .productsContent {
+    border-top: 1px solid #000;
+  }
+
+  &:nth-child(4n + 1) .productsContent {
+    border-left: 1px solid #000;
+  }
+
   &:nth-child(4n) .productsContent {
     border-right: 1px solid #000;
   }
 
   &:nth-child(4n + 1) .productsContent:not(:nth-child(4n)) {
     border-right: 1px solid #000;
-  }
-
-  &:nth-child(4n) .productsContent {
-    border-right: none;
-  }
-
-  &:nth-last-child(-n + 4) .productsContent {
-    border-bottom: none;
   }
 }
 
