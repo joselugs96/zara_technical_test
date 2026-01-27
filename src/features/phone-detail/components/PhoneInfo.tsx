@@ -10,7 +10,6 @@ interface PhoneInfoProps {
 function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
   const [selectedStorage, setSelectedStorage] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
-  const [fadeKey, setFadeKey] = useState(0);
 
   const isFullyConfigured = selectedStorage !== '' && selectedColor !== '';
 
@@ -21,7 +20,6 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
 
   const handleStorageChange = (capacity: string) => {
     setSelectedStorage(capacity);
-    setFadeKey((prev) => prev + 1);
   };
 
   const currentPrice = selectedStorage
@@ -34,9 +32,7 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
     <div className={styles.productInfo}>
       <h1 className={styles.name}>{phone.name}</h1>
       <p className={styles.price}>
-        <span key={fadeKey} className={styles.priceFade}>
-          {currentPrice}
-        </span>
+        <span className={styles.priceFade}>{currentPrice}</span>
         {' EUR'}
       </p>
 
