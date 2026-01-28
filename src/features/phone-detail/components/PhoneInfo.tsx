@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './PhoneInfo.module.scss';
 import { PhoneDetail } from '@/features/phone-detail/lib/types';
+import { useCart } from '@/shared/context/CartContext';
+import { ROUTES } from '@/shared/lib/routes';
 
 interface PhoneInfoProps {
   phone: PhoneDetail;
@@ -8,10 +11,18 @@ interface PhoneInfoProps {
 }
 
 function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
+  const router = useRouter();
+  const { addItem } = useCart();
   const [selectedStorage, setSelectedStorage] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
 
   const isFullyConfigured = selectedStorage !== '' && selectedColor !== '';
+
+  const currentPrice = selectedStorage
+    ? phone.storageOptions?.find(
+        (option) => option.capacity === selectedStorage
+      )?.price || phone.basePrice
+    : phone.storageOptions?.[0]?.price || phone.basePrice;
 
   const handleColorChange = (colorName: string) => {
     setSelectedColor(colorName);
@@ -22,12 +33,24 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
     setSelectedStorage(capacity);
   };
 
-  const currentPrice = selectedStorage
-    ? phone.storageOptions?.find(
-        (option) => option.capacity === selectedStorage
-      )?.price || phone.basePrice
-    : phone.storageOptions?.[0]?.price || phone.basePrice;
+  const handleAddToCart = () => {
+    if (isFullyConfigured && selectedStorage && selectedColor) {
+      const selectedColorOption = phone.colorOptions?.find(
+        (color) => color.name === selectedColor
+      );
 
+      addItem({
+        id: phone.id,
+        name: phone.name,
+        price: currentPrice,
+        color: selectedColor,
+        storage: selectedStorage,
+        imageUrl:
+          selectedColorOption?.imageUrl || phone.colorOptions?.[0]?.imageUrl,
+      });
+      router.push(ROUTES.cart);
+    }
+  };
   return (
     <div className={styles.productInfo}>
       <h1 className={styles.name}>{phone.name}</h1>
@@ -80,7 +103,7 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
 
       <button
         className={styles.addToCartButton}
-        onClick={() => console.log('CARRITO')}
+        onClick={handleAddToCart}
         disabled={!isFullyConfigured}
       >
         AÑADIR

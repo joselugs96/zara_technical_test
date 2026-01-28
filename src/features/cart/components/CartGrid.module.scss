@@ -1,0 +1,41 @@
+@import '@/styles/tokens';
+@import '@/styles/mixins';
+
+.cartGrid {
+  width: 100%;
+}
+
+.cartHeader {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: #000;
+    margin: 0;
+  }
+}
+
+.itemCount {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 3rem;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 728px) {
+    grid-template-columns: 1fr;
+  }
+}
