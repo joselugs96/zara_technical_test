@@ -58,7 +58,7 @@ button {
     max-width: 98%;
     padding: $spacing-xl $spacing-md;
   }
-  @include respond-to('smaill-tablet') {
+  @include respond-to('small-tablet') {
     max-width: 98%;
     padding: $spacing-xl $spacing-md;
   }
