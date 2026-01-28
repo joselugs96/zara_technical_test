@@ -43,18 +43,6 @@ function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
     case 'REMOVE_ITEM':
       return state.filter((item) => !isSameItem(item, action.payload));
 
-    case 'UPDATE_QUANTITY':
-      return action.payload.quantity <= 0
-        ? state.filter((item) => !isSameItem(item, action.payload))
-        : state.map((item) =>
-            isSameItem(item, action.payload)
-              ? { ...item, quantity: action.payload.quantity }
-              : item
-          );
-
-    case 'CLEAR_CART':
-      return [];
-
     case 'LOAD_FROM_STORAGE':
       return action.payload;
 
@@ -103,9 +91,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         dispatch({ type: 'ADD_ITEM', payload: item }),
       removeItem: (key: CartItemKey) =>
         dispatch({ type: 'REMOVE_ITEM', payload: key }),
-      updateQuantity: (key: CartItemKey, quantity: number) =>
-        dispatch({ type: 'UPDATE_QUANTITY', payload: { ...key, quantity } }),
-      clearCart: () => dispatch({ type: 'CLEAR_CART' }),
       totalItems,
       totalPrice,
       isHydrated,
