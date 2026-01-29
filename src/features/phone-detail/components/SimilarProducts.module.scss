@@ -18,7 +18,7 @@
 
 .productsGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
   gap: 0;
   margin-bottom: 24px;
   animation: fadeIn 0.6s ease-in-out;
@@ -29,7 +29,15 @@
     grid-template-columns: repeat(5, 1fr);
   }
 
+  @include respond-to('desktop') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   @include respond-to('tablet') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('small-tablet') {
     grid-template-columns: repeat(2, 1fr);
   }
 
