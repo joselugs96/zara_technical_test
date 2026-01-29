@@ -13,6 +13,10 @@ function SimilarProducts({ products }: SimilarProductsProps) {
     return null;
   }
 
+  const uniqueProducts = Array.from(
+    new Map(products.map((product) => [product.id, product])).values()
+  );
+
   const getImageClassName = (product: SimilarProduct) => {
     const isRedmi =
       product.brand.toLowerCase().includes('xiaomi') ||
@@ -27,7 +31,7 @@ function SimilarProducts({ products }: SimilarProductsProps) {
       <h2 className={styles.title}>SIMILAR ITEMS</h2>
 
       <div className={styles.productsGrid}>
-        {products.map((product) => (
+        {uniqueProducts.map((product) => (
           <Link
             key={product.id}
             href={ROUTES.phoneDetail(product.id)}
