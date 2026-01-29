@@ -22,12 +22,12 @@ function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
       <Image
         className={imageClassName}
         src={imageUrl}
-        alt={name}
+        alt={`${name} - ${brand}`}
         width={700}
         height={700}
         quality={90}
-        priority={false}
         sizes="(max-width: 768px) 300px, (max-width: 1200px) 500px, 600px"
+        priority
       />
     </figure>
   );

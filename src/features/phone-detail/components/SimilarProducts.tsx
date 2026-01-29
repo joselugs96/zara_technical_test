@@ -37,11 +37,11 @@ function SimilarProducts({ products }: SimilarProductsProps) {
               <div className={styles.imageWrapper}>
                 <Image
                   src={product.imageUrl}
-                  alt={product.name}
-                  width={250}
-                  height={250}
-                  quality={90}
+                  alt={`${product.name} - ${product.brand}`}
+                  fill
                   className={getImageClassName(product)}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
                 />
               </div>
 
