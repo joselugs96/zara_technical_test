@@ -1,54 +1,29 @@
 import { NextResponse } from 'next/server';
-import {
-  validateEnvVars,
-  fetchFromUpstream,
-  buildUpstreamUrl,
-} from '@/app/api/lib/upstreamFetch';
+import { fetchPhonesFromUpstream } from '@/features/phones/services/phones.repository';
+import { UpstreamError } from '@/app/api/lib/upstreamFetch';
 
 export async function GET(request: Request) {
-  const baseUrl = process.env.PHONES_API_BASE_URL;
-  const apiKey = process.env.PHONES_API_KEY;
-
-  const envError = validateEnvVars(baseUrl, apiKey);
-  if (envError) {
-    return NextResponse.json(
-      { ok: false, message: envError.error },
-      { status: envError.status }
-    );
-  }
-
   const { searchParams } = new URL(request.url);
-  const upstreamUrl = new URL(buildUpstreamUrl(baseUrl!, '/products'));
-
-  searchParams.forEach((value, key) => {
-    upstreamUrl.searchParams.set(key, value);
-  });
 
   try {
-    const { body } = await fetchFromUpstream({
-      url: upstreamUrl.toString(),
-      apiKey: apiKey!,
-      endpoint: 'Phones',
+    const phones = await fetchPhonesFromUpstream({
+      search: searchParams.get('search') ?? undefined,
+      limit: Number(searchParams.get('limit') ?? 20),
+      offset: Number(searchParams.get('offset') ?? 0),
     });
 
-    return NextResponse.json(body, { status: 200 });
-  } catch (err: unknown) {
-    const isAbort = err instanceof Error && err.name === 'AbortError';
-
-    console.error('Phones API error:', {
-      isAbort,
-      error: err instanceof Error ? err.message : 'Unknown error',
-      timestamp: new Date().toISOString(),
-    });
+    return NextResponse.json(phones, { status: 200 });
+  } catch (err) {
+    if (err instanceof UpstreamError) {
+      return NextResponse.json(
+        { ok: false, message: err.message },
+        { status: err.status }
+      );
+    }
 
     return NextResponse.json(
-      {
-        ok: false,
-        message: isAbort
-          ? 'Upstream request timed out'
-          : 'Upstream request error',
-      },
-      { status: 502 }
+      { ok: false, message: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

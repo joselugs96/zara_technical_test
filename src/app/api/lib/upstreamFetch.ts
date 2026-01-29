@@ -1,6 +1,26 @@
 const DEFAULT_TIMEOUT_MS = 10_000;
 
 import { UpstreamFetchOptions, UpstreamResponse } from './types';
+export class UpstreamError extends Error {
+  status: number;
+  isAbort: boolean;
+  body?: unknown;
+
+  constructor(
+    message: string,
+    status: number,
+    options?: {
+      isAbort?: boolean;
+      body?: unknown;
+    }
+  ) {
+    super(message);
+    this.name = 'UpstreamError';
+    this.status = status;
+    this.isAbort = options?.isAbort ?? false;
+    this.body = options?.body;
+  }
+}
 
 export function validateEnvVars(
   baseUrl: string | undefined,
@@ -40,30 +60,32 @@ export async function fetchFromUpstream(
     const body = isJson ? await res.json() : await res.text();
 
     if (!res.ok) {
-      throw {
-        message: 'Upstream request failed',
-        status: res.status,
+      throw new UpstreamError('Upstream request failed', res.status, {
         body,
-      };
+      });
     }
 
     return { body, isJson };
   } catch (err: unknown) {
     const isAbort = err instanceof Error && err.name === 'AbortError';
 
+    const error =
+      err instanceof UpstreamError
+        ? err
+        : new UpstreamError(
+            isAbort ? 'Upstream request timed out' : 'Upstream request error',
+            isAbort ? 504 : 502,
+            { isAbort }
+          );
+
     console.error(`${options.endpoint} API error:`, {
-      isAbort,
-      error: err instanceof Error ? err.message : 'Unknown error',
+      isAbort: error.isAbort,
+      status: error.status,
+      message: error.message,
       timestamp: new Date().toISOString(),
     });
 
-    throw {
-      message: isAbort
-        ? 'Upstream request timed out'
-        : 'Upstream request error',
-      status: isAbort ? 504 : 502,
-      isAbort,
-    };
+    throw error;
   } finally {
     clearTimeout(timeoutId);
   }

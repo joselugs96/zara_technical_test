@@ -1,31 +1,32 @@
 import { PhoneListItem, GetPhonesParams } from '../lib/types';
+import { fetchPhonesFromUpstream } from './phones.repository';
+
+function getClientBaseUrl(): string {
+  if (typeof window === 'undefined') {
+    throw new Error('getClientBaseUrl called on server');
+  }
+  return window.location.origin;
+}
 
 export async function getPhones(
-  baseUrl: string,
-  { search, limit = 20, offset = 0 }: GetPhonesParams = {}
+  params: GetPhonesParams = {}
 ): Promise<PhoneListItem[]> {
+  if (typeof window === 'undefined') {
+    return fetchPhonesFromUpstream(params);
+  }
+
+  const baseUrl = getClientBaseUrl();
   const url = new URL('/api/phones', baseUrl);
 
-  if (search) url.searchParams.set('search', search);
-  if (limit) url.searchParams.set('limit', String(limit));
-  if (offset) url.searchParams.set('offset', String(offset));
+  if (params.search) url.searchParams.set('search', params.search);
+  if (params.limit) url.searchParams.set('limit', String(params.limit));
+  if (params.offset) url.searchParams.set('offset', String(params.offset));
 
-  try {
-    const res = await fetch(url.toString(), { cache: 'no-store' });
+  const res = await fetch(url.toString());
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch phones (${res.status})`);
-    }
-
-    const data = await res.json();
-
-    if (!Array.isArray(data)) {
-      throw new Error('Invalid response structure');
-    }
-
-    return data as PhoneListItem[];
-  } catch (error) {
-    console.error('Error fetching phones:', error);
-    throw error;
+  if (!res.ok) {
+    throw new Error(`Failed to fetch phones (${res.status})`);
   }
+
+  return res.json();
 }
