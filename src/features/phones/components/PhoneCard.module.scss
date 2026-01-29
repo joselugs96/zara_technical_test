@@ -43,60 +43,6 @@
   }
 }
 
-.phoneCard:nth-child(4n) .phoneCardContent {
-  border-right: none;
-}
-
-.phoneCard:nth-last-child(-n + 4) .phoneCardContent {
-  border-bottom: none;
-}
-
-@include respond-to('wide') {
-  .phoneCard:nth-child(4n) .phoneCardContent {
-    border-right: 1px solid #000;
-  }
-
-  .phoneCard:nth-child(5n) .phoneCardContent {
-    border-right: none;
-  }
-
-  .phoneCard:nth-last-child(-n + 4) .phoneCardContent {
-    border-bottom: 1px solid #000;
-  }
-
-  .phoneCard:nth-last-child(-n + 5) .phoneCardContent {
-    border-bottom: none;
-  }
-}
-
-@include respond-to('tablet') {
-  .phoneCard:nth-child(4n) .phoneCardContent {
-    border-right: 1px solid #000;
-  }
-
-  .phoneCard:nth-child(2n) .phoneCardContent {
-    border-right: none;
-  }
-
-  .phoneCard:nth-last-child(-n + 4) .phoneCardContent {
-    border-bottom: 1px solid #000;
-  }
-
-  .phoneCard:nth-last-child(-n + 2) .phoneCardContent {
-    border-bottom: none;
-  }
-}
-
-@include respond-to('mobile') {
-  .phoneCard:nth-child(1n) .phoneCardContent {
-    border-right: none;
-  }
-
-  .phoneCard:nth-last-child(-n + 1) .phoneCardContent {
-    border-bottom: none;
-  }
-}
-
 .phoneImage {
   width: 100%;
   aspect-ratio: 1;
