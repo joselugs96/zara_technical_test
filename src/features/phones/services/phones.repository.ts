@@ -34,5 +34,11 @@ export async function fetchPhonesFromUpstream(
     throw new Error('Invalid upstream response');
   }
 
-  return body as PhoneListItem[];
+  const phones = body as PhoneListItem[];
+
+  const uniquePhones = Array.from(
+    new Map(phones.map((phone) => [phone.id, phone])).values()
+  );
+
+  return uniquePhones;
 }
