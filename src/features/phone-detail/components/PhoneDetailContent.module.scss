@@ -4,7 +4,6 @@
 .containerDetail {
   display: flex;
   flex-direction: column;
-  gap: 60px;
   animation: fadeIn 0.4s ease-in-out 0.2s both;
 }
 
@@ -46,7 +45,7 @@
     min-height: 700px;
   }
 
-  .containerDetail {
+  .phoneDetailContainer {
     padding: 0 10%;
   }
 }
@@ -58,4 +57,23 @@
   to {
     opacity: 1;
   }
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.backIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }

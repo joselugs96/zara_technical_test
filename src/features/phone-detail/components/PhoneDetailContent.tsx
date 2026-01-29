@@ -1,12 +1,14 @@
 'use client';
 
 import { Suspense, useState } from 'react';
+import Link from 'next/link';
 import PhoneGallery from './PhoneGallery';
 import PhoneInfo from './PhoneInfo';
 import PhoneSpecifications from './PhoneSpecifications';
 import SimilarProducts from './SimilarProducts';
 import { PhoneDetail } from '@/features/phone-detail/lib/types';
 import styles from './PhoneDetailContent.module.scss';
+import { ROUTES } from '@/shared/lib/routes';
 
 interface PhoneDetailContentProps {
   phone: PhoneDetail;
@@ -26,18 +28,34 @@ function PhoneDetailContent({ phone }: PhoneDetailContentProps) {
   return (
     <Suspense fallback={<div />}>
       <div className={styles.containerDetail}>
-        <div className={styles.gridPhoneDetail}>
-          <PhoneGallery
-            imageUrl={selectedColorImage}
-            brand={phone.brand}
-            name={phone.name}
-          />
-          <PhoneInfo phone={phone} onColorChange={setSelectedColorName} />
+        <Link href={ROUTES.home} className={styles.backButton}>
+          <svg
+            className={styles.backIcon}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          BACK
+        </Link>
+        <div className={styles.phoneDetailContainer}>
+          <div className={styles.gridPhoneDetail}>
+            <PhoneGallery
+              imageUrl={selectedColorImage}
+              brand={phone.brand}
+              name={phone.name}
+            />
+            <PhoneInfo phone={phone} onColorChange={setSelectedColorName} />
+          </div>
+
+          <PhoneSpecifications phone={phone} />
+
+          <SimilarProducts products={phone.similarProducts} />
         </div>
-
-        <PhoneSpecifications phone={phone} />
-
-        <SimilarProducts products={phone.similarProducts} />
       </div>
     </Suspense>
   );
