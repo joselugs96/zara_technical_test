@@ -13,7 +13,7 @@ export default async function PhoneDetailPage({
   const phone = await getPhoneDetail(params.id);
 
   return (
-    <main className="container">
+    <main>
       <PhoneDetailContent phone={phone} />
     </main>
   );

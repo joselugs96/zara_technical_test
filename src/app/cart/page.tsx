@@ -17,9 +17,7 @@ function CartPage() {
     <div className={styles.pageContainer}>
       <Suspense fallback={<div />}>
         <main className={styles.mainContent}>
-          <div className="container">
-            <CartGrid items={items} />
-          </div>
+          <CartGrid items={items} />
         </main>
         <CartFooter />
       </Suspense>
