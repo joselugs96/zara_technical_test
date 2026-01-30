@@ -7,6 +7,10 @@
   display: block;
   height: 100%;
 
+  &:focus-visible .phoneCardContent::before {
+    height: 100%;
+  }
+
   @include respond-to('wide') {
     &:nth-child(-n + 5) {
       border-top: 1px solid #000;
@@ -117,6 +121,10 @@
   .phoneCardContent:hover & {
     color: #e0e0e0;
   }
+
+  .phoneCard:focus-visible .phoneCardContent & {
+    color: #e0e0e0;
+  }
 }
 
 .phoneNameAndPrice {
@@ -139,6 +147,10 @@
   .phoneCardContent:hover & {
     color: #fff;
   }
+
+  .phoneCard:focus-visible .phoneCardContent & {
+    color: #fff;
+  }
 }
 
 .phonePrice {
@@ -149,6 +161,10 @@
   transition: color 0.4s ease;
 
   .phoneCardContent:hover & {
+    color: #fff;
+  }
+
+  .phoneCard:focus-visible .phoneCardContent & {
     color: #fff;
   }
 }

@@ -15,14 +15,15 @@ async function HomePage({ searchParams }: HomePageProps) {
     const phones = await getPhones({ search: searchParams?.search, limit });
 
     return (
-      <main className={styles.pageContainer}>
+      <main id="main-phones-content" className={styles.pageContainer}>
+        <h1 className="sr-only">Catálogo de teléfonos móviles</h1>
         <PhoneGridSearch phoneCount={phones.length} />
         <PhoneGrid phones={phones} />
       </main>
     );
   } catch (error) {
     return (
-      <main className={styles.pageContainer}>
+      <main id="main-phones-content" className={styles.pageContainer}>
         <h1>Error</h1>
         <p>
           {error instanceof Error ? error.message : 'Error al cargar teléfonos'}

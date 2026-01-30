@@ -18,11 +18,14 @@ function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
       : styles.phoneImageDefault;
 
   return (
-    <figure className={styles.gallery}>
+    <figure
+      className={styles.gallery}
+      aria-label={`${brand} ${name} product image`}
+    >
       <Image
         className={imageClassName}
         src={imageUrl}
-        alt={`${name} - ${brand}`}
+        alt={`${brand} ${name} - Product view`}
         width={700}
         height={700}
         quality={90}
@@ -32,4 +35,5 @@ function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
     </figure>
   );
 }
+
 export default PhoneGallery;

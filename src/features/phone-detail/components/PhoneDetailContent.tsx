@@ -26,9 +26,23 @@ function PhoneDetailContent({ phone }: PhoneDetailContentProps) {
     '';
 
   return (
-    <Suspense fallback={<div />}>
+    <Suspense
+      fallback={
+        <div
+          aria-busy="true"
+          aria-label="Loading phone details..."
+          role="status"
+        >
+          <p className="sr-only">Loading product information...</p>
+        </div>
+      }
+    >
       <div className={styles.containerDetail}>
-        <Link href={ROUTES.home} className={styles.backButton}>
+        <Link
+          href={ROUTES.home}
+          className={styles.backButton}
+          aria-label="Go back to products list"
+        >
           <svg
             className={styles.backIcon}
             width="16"
@@ -37,6 +51,7 @@ function PhoneDetailContent({ phone }: PhoneDetailContentProps) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
+            aria-hidden="true"
           >
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>

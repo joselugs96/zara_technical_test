@@ -23,14 +23,23 @@ export default function PhoneSpecifications({
   ];
 
   return (
-    <section className={styles.specificationsContainer}>
+    <section
+      className={styles.specificationsContainer}
+      aria-label="Phone specifications"
+    >
       <h2 className={styles.title}>SPECIFICATIONS</h2>
-      <div className={styles.specsTable}>
+      <div
+        className={styles.specsTable}
+        role="region"
+        aria-label="Detailed phone specifications"
+      >
         {specs.map(
           (spec, index) =>
             spec.value && (
               <div key={index} className={styles.specRow}>
-                <div className={styles.specLabel}>{spec.label}</div>
+                <div className={styles.specLabel} aria-label={spec.label}>
+                  {spec.label}
+                </div>
                 <div className={styles.specValue}>{spec.value}</div>
               </div>
             )

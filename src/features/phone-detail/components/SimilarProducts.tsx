@@ -27,37 +27,41 @@ function SimilarProducts({ products }: SimilarProductsProps) {
   };
 
   return (
-    <section className={styles.similarProductsContainer}>
+    <section
+      className={styles.similarProductsContainer}
+      aria-label="Similar products"
+    >
       <h2 className={styles.title}>SIMILAR ITEMS</h2>
 
-      <div className={styles.productsGrid}>
+      <ul className={styles.productsGrid} role="list">
         {uniqueProducts.map((product) => (
-          <Link
-            key={product.id}
-            href={ROUTES.phoneDetail(product.id)}
-            className={styles.productCard}
-          >
-            <article className={styles.productsContent}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={product.imageUrl}
-                  alt={`${product.name} - ${product.brand}`}
-                  fill
-                  className={getImageClassName(product)}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                />
-              </div>
+          <li key={product.id} role="listitem">
+            <Link
+              href={ROUTES.phoneDetail(product.id)}
+              className={styles.productCard}
+              aria-label={`${product.brand} ${product.name} - ${product.basePrice} EUR`}
+            >
+              <article className={styles.productsContent}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={product.imageUrl}
+                    alt={`${product.name} by ${product.brand}`}
+                    fill
+                    className={getImageClassName(product)}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
 
-              <div className={styles.productInfo}>
-                <p className={styles.brand}>{product.brand}</p>
-                <h3 className={styles.name}>{product.name}</h3>
-                <p className={styles.price}>{product.basePrice} EUR</p>
-              </div>
-            </article>
-          </Link>
+                <div className={styles.productInfo}>
+                  <p className={styles.brand}>{product.brand}</p>
+                  <h3 className={styles.name}>{product.name}</h3>
+                  <p className={styles.price}>{product.basePrice} EUR</p>
+                </div>
+              </article>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

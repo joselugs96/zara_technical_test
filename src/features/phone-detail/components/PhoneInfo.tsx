@@ -51,9 +51,10 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
       router.push(ROUTES.cart);
     }
   };
+
   return (
-    <div className={styles.productInfo}>
-      <h1 className={styles.name}>{phone.name}</h1>
+    <section className={styles.productInfo}>
+      <h2 className={styles.name}>{phone.name}</h2>
       <p className={styles.price}>
         <span className={styles.priceFade}>{currentPrice}</span>
         {' EUR'}
@@ -61,17 +62,24 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
 
       {phone.storageOptions && phone.storageOptions.length > 0 && (
         <div className={styles.sectionCapacity}>
-          <h3 className={styles.sectionTitle}>
-            Storage ¿How much space do you need?
+          <h3 id="storage-legend" className={styles.sectionTitle}>
+            Storage: How much space do you need?
           </h3>
-          <div className={styles.optionsCapacityGrid}>
+          <div
+            className={styles.optionsCapacityGrid}
+            role="group"
+            aria-labelledby="storage-legend"
+          >
             {phone.storageOptions.map((option) => (
               <button
                 key={option.capacity}
+                id={`storage-${option.capacity}`}
                 className={`${styles.optionCapacityButton} ${
                   selectedStorage === option.capacity ? styles.active : ''
                 }`}
                 onClick={() => handleStorageChange(option.capacity)}
+                aria-pressed={selectedStorage === option.capacity}
+                aria-label={`${option.capacity} storage option`}
               >
                 {option.capacity}
               </button>
@@ -82,19 +90,26 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
 
       {phone.colorOptions && phone.colorOptions.length > 0 && (
         <div className={styles.sectionColor}>
-          <h3 className={styles.sectionTitle}>Color. Pick your favourite</h3>
-          <div className={styles.colorGrid}>
+          <h3 id="color-legend" className={styles.sectionTitle}>
+            Color: Pick your favourite
+          </h3>
+          <div
+            className={styles.colorGrid}
+            role="group"
+            aria-labelledby="color-legend"
+          >
             {phone.colorOptions.map((color) => (
               <button
                 key={color.name}
+                id={`color-${color.name}`}
                 className={`${styles.colorButton} ${
                   selectedColor === color.name ? styles.active : ''
                 }`}
                 style={{ backgroundColor: color.hexCode }}
                 onClick={() => handleColorChange(color.name)}
-                title={color.name}
-                aria-label={`Color ${color.name}`}
+                aria-label={`Color: ${color.name}`}
                 aria-pressed={selectedColor === color.name}
+                title={`Select ${color.name} color`}
               />
             ))}
           </div>
@@ -105,10 +120,11 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
         className={styles.addToCartButton}
         onClick={handleAddToCart}
         disabled={!isFullyConfigured}
+        aria-disabled={!isFullyConfigured}
       >
         AÑADIR
       </button>
-    </div>
+    </section>
   );
 }
 

@@ -42,14 +42,29 @@ function PhoneGridSearch({ phoneCount }: PhoneGridSearchProps) {
 
   return (
     <div className={styles.searchSection}>
+      <label htmlFor="phone-search" className="sr-only">
+        Search for smartphones
+      </label>
       <input
+        id="phone-search"
+        type="search"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search for a smartphone..."
         className={styles.searchInput}
         disabled={isPending}
+        aria-disabled={isPending}
+        aria-describedby="search-results"
       />
-      <p className={styles.resultCount}>{displayCount} RESULTS</p>
+      <p
+        id="search-results"
+        className={styles.resultCount}
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {displayCount} RESULTS
+      </p>
     </div>
   );
 }

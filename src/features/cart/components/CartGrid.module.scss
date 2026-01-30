@@ -28,6 +28,7 @@
 
 .gridContainer {
   display: grid;
+  list-style: none;
   grid-template-columns: repeat(3, 1fr);
   margin-bottom: 3rem;
 

@@ -10,6 +10,7 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
   const [displayPhones, setDisplayPhones] = useState(phones);
   const isFirstRender = useRef(true);
   const previousLength = useRef(phones.length);
+  const gridRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -27,6 +28,10 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
     const hideTimer = setTimeout(() => {
       setDisplayPhones(phones);
       setIsVisible(true);
+
+      if (gridRef.current) {
+        gridRef.current.setAttribute('aria-busy', 'false');
+      }
     }, 300);
 
     previousLength.current = phones.length;
@@ -39,23 +44,32 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
   }
 
   return (
-    <div
+    <ul
+      ref={gridRef}
       className={`${styles.phoneGrid} ${isVisible ? styles.fadeIn : styles.fadeOut}`}
+      role="list"
+      aria-busy={!isVisible}
+      aria-label="List of available phones"
     >
       {displayPhones.map((phone) => (
-        <PhoneCard key={phone.id} phone={phone} />
+        <li key={phone.id} role="listitem">
+          <PhoneCard phone={phone} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
 function PhoneGrid({ phones }: PhoneGridProps) {
   return (
-    <section
-      aria-label="Catálogo de teléfonos"
-      className={styles.phoneGridContainer}
-    >
-      <Suspense fallback={<div />}>
+    <section aria-label="Phone catalog" className={styles.phoneGridContainer}>
+      <Suspense
+        fallback={
+          <div aria-busy="true" aria-label="Loading phones..." role="status">
+            <p className="sr-only">Loading available phones...</p>
+          </div>
+        }
+      >
         <PhoneGridContent phones={phones} />
       </Suspense>
     </section>

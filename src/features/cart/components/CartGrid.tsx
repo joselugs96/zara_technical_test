@@ -10,17 +10,38 @@ interface CartGridProps {
 function CartGrid({ items }: CartGridProps) {
   const { removeItem, totalItems } = useCart();
 
+  if (items.length === 0) {
+    return (
+      <section className={styles.cartGrid} aria-label="Shopping cart">
+        <div className={styles.cartHeader}>
+          <h2 className={styles.cartHeader}>CART (0)</h2>
+          <div className="sr-only" role="status" aria-live="polite">
+            <p>Your cart is empty. Continue shopping to add items.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <div className={styles.cartGrid}>
+    <section className={styles.cartGrid} aria-label="Shopping cart items">
       <div className={styles.cartHeader}>
-        <h2>CART ({totalItems})</h2>
+        <h2>
+          CART ({totalItems})
+          <span className="sr-only">
+            , {totalItems} item{totalItems !== 1 ? 's' : ''} in cart
+          </span>
+        </h2>
       </div>
 
-      {items.length > 0 && (
-        <div className={styles.gridContainer}>
-          {items.map((item) => (
+      <ul
+        className={styles.gridContainer}
+        role="list"
+        aria-label="Cart items list"
+      >
+        {items.map((item) => (
+          <li key={`${item.id}-${item.color}-${item.storage}`} role="listitem">
             <CartItemComponent
-              key={`${item.id}-${item.color}-${item.storage}`}
               item={item}
               onRemove={() =>
                 removeItem({
@@ -30,10 +51,10 @@ function CartGrid({ items }: CartGridProps) {
                 })
               }
             />
-          ))}
-        </div>
-      )}
-    </div>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
