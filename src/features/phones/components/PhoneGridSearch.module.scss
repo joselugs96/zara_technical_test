@@ -1,0 +1,33 @@
+@import '@/styles/tokens';
+@import '@/styles/mixins';
+
+.searchBarContainer {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 5px 0;
+  border: none;
+  border-bottom: 1px solid #000;
+  background-color: transparent;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-size: 0.9rem;
+
+  &::placeholder {
+    color: #999;
+    font-weight: 300;
+  }
+}
+
+.searchSection {
+  margin: 35px 0;
+}
+
+.resultCount {
+  margin-top: 10px;
+}
