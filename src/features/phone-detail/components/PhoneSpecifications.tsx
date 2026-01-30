@@ -1,13 +1,7 @@
 import styles from './PhoneSpecifications.module.scss';
-import { PhoneDetail } from '@/features/phone-detail/lib/types';
+import { PhoneDataProps } from '@/features/phone-detail/lib/types';
 
-interface PhoneSpecificationsProps {
-  phone: PhoneDetail;
-}
-
-export default function PhoneSpecifications({
-  phone,
-}: PhoneSpecificationsProps) {
+function PhoneSpecifications({ phone }: PhoneDataProps) {
   const specs = [
     { label: 'BRAND', value: phone.brand },
     { label: 'NAME', value: phone.name },
@@ -48,3 +42,5 @@ export default function PhoneSpecifications({
     </section>
   );
 }
+
+export default PhoneSpecifications;

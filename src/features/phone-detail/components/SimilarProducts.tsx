@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SimilarProducts.module.scss';
-import { SimilarProduct } from '@/features/phone-detail/lib/types';
+import {
+  SimilarProduct,
+  SimilarProductsProps,
+} from '@/features/phone-detail/lib/types';
 import { ROUTES } from '@/shared/lib/routes';
-
-interface SimilarProductsProps {
-  products: SimilarProduct[];
-}
 
 function SimilarProducts({ products }: SimilarProductsProps) {
   if (!products || products.length === 0) {

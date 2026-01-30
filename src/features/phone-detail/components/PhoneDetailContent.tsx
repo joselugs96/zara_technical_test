@@ -6,15 +6,11 @@ import PhoneGallery from './PhoneGallery';
 import PhoneInfo from './PhoneInfo';
 import PhoneSpecifications from './PhoneSpecifications';
 import SimilarProducts from './SimilarProducts';
-import { PhoneDetail } from '@/features/phone-detail/lib/types';
+import { PhoneDataProps } from '@/features/phone-detail/lib/types';
 import styles from './PhoneDetailContent.module.scss';
 import { ROUTES } from '@/shared/lib/routes';
 
-interface PhoneDetailContentProps {
-  phone: PhoneDetail;
-}
-
-function PhoneDetailContent({ phone }: PhoneDetailContentProps) {
+function PhoneDetailContent({ phone }: PhoneDataProps) {
   const [selectedColorName, setSelectedColorName] = useState<string>(
     phone.colorOptions?.[0]?.name || ''
   );

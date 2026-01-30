@@ -27,6 +27,9 @@ export interface SimilarProduct {
   basePrice: number;
   imageUrl: string;
 }
+export interface SimilarProductsProps {
+  products: SimilarProduct[];
+}
 
 export interface PhoneDetail {
   id: string;
@@ -39,6 +42,9 @@ export interface PhoneDetail {
   colorOptions: PhoneColorOption[];
   storageOptions: PhoneStorageOption[];
   similarProducts: SimilarProduct[];
+}
+export interface PhoneDataProps {
+  phone: PhoneDetail;
 }
 
 export interface PhoneInfoProps {

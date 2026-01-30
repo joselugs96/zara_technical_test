@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './PhoneInfo.module.scss';
-import { PhoneDetail } from '@/features/phone-detail/lib/types';
+import { PhoneInfoProps } from '@/features/phone-detail/lib/types';
 import { useCart } from '@/shared/context/CartContext';
 import { ROUTES } from '@/shared/lib/routes';
-
-interface PhoneInfoProps {
-  phone: PhoneDetail;
-  onColorChange?: (colorName: string) => void;
-}
 
 function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
   const router = useRouter();
