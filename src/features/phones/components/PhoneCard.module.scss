@@ -10,36 +10,6 @@
   &:focus-visible .phoneCardContent::before {
     height: 100%;
   }
-
-  @include respond-to('wide') {
-    &:nth-child(-n + 5) {
-      border-top: 1px solid #000;
-    }
-  }
-
-  @include respond-to('desktop') {
-    &:nth-child(-n + 4) {
-      border-top: 1px solid #000;
-    }
-  }
-
-  @include respond-to('tablet') {
-    &:nth-child(-n + 2) {
-      border-top: 1px solid #000;
-    }
-  }
-
-  @include respond-to('small-tablet') {
-    &:nth-child(-n + 2) {
-      border-top: 1px solid #000;
-    }
-  }
-
-  @include respond-to('mobile') {
-    &:nth-child(1) {
-      border-top: 1px solid #000;
-    }
-  }
 }
 
 .phoneCardContent {

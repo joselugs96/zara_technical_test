@@ -15,22 +15,52 @@
 
   @include respond-to('wide') {
     grid-template-columns: repeat(5, 1fr);
+
+    li:nth-child(-n + 5) {
+      a {
+        border-top: 1px solid #000;
+      }
+    }
   }
 
   @include respond-to('desktop') {
     grid-template-columns: repeat(4, 1fr);
+
+    li:nth-child(-n + 4) {
+      a {
+        border-top: 1px solid #000;
+      }
+    }
   }
 
   @include respond-to('tablet') {
     grid-template-columns: repeat(2, 1fr);
+
+    li:nth-child(-n + 2) {
+      a {
+        border-top: 1px solid #000;
+      }
+    }
   }
 
   @include respond-to('small-tablet') {
     grid-template-columns: repeat(2, 1fr);
+
+    li:nth-child(-n + 2) {
+      a {
+        border-top: 1px solid #000;
+      }
+    }
   }
 
   @include respond-to('mobile') {
     grid-template-columns: repeat(1, 1fr);
+
+    li:nth-child(1) {
+      a {
+        border-top: 1px solid #000;
+      }
+    }
   }
 }
 
