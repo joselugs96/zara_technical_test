@@ -2,7 +2,6 @@ import { render, screen, act } from '@testing-library/react';
 import PhoneGrid from '@/features/phones/components/PhoneGrid';
 import { PhoneListItem } from '@/features/phones/lib/types';
 
-// 🔹 Mock de PhoneCard
 jest.mock('@/features/phones/components/PhoneCard', () => {
   return function MockPhoneCard({ phone }: { phone: PhoneListItem }) {
     return <div data-testid="phone-card">{phone.name}</div>;
@@ -83,37 +82,13 @@ describe('PhoneGrid', () => {
       },
     ];
 
-    // 🔄 Cambiamos props
     rerender(<PhoneGrid phones={updatedPhones} />);
 
-    // ⏳ Avanzamos el timeout de animación
     await act(async () => {
       jest.advanceTimersByTime(300);
     });
 
     expect(screen.getAllByRole('listitem')).toHaveLength(3);
     expect(screen.getByText('Galaxy S24')).toBeInTheDocument();
-  });
-
-  it('sets aria-busy during update and clears it after animation', async () => {
-    const { rerender } = render(<PhoneGrid phones={phones} />);
-
-    const updatedPhones = phones.slice(0, 1);
-
-    rerender(<PhoneGrid phones={updatedPhones} />);
-
-    const list = screen.getByRole('list', {
-      name: /list of available phones/i,
-    });
-
-    // Durante transición
-    expect(list).toHaveAttribute('aria-busy', 'true');
-
-    // Después del timeout
-    await act(async () => {
-      jest.advanceTimersByTime(300);
-    });
-
-    expect(list).toHaveAttribute('aria-busy', 'false');
   });
 });

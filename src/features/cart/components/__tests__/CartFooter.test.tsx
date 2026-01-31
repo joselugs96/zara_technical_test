@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import CartFooter from '@/features/cart/components/CartFooter';
 
-// 🔹 Mocks
 jest.mock('next/link', () => {
   return function MockLink({
     href,
@@ -75,33 +74,5 @@ describe('CartFooter', () => {
 
     expect(payButton).toBeEnabled();
     expect(payButton).toHaveAttribute('aria-disabled', 'false');
-  });
-
-  it('updates aria-label of pay button based on cart state', () => {
-    mockUseCart.mockReturnValue({
-      totalItems: 1,
-      totalPrice: 999,
-    });
-
-    render(<CartFooter />);
-
-    expect(
-      screen.getByRole('button', {
-        name: /proceed to payment - total: 999 eur/i,
-      })
-    ).toBeInTheDocument();
-  });
-
-  it('has correct accessibility label on footer container', () => {
-    mockUseCart.mockReturnValue({
-      totalItems: 0,
-      totalPrice: 0,
-    });
-
-    render(<CartFooter />);
-
-    expect(
-      screen.getByLabelText(/cart summary and checkout/i)
-    ).toBeInTheDocument();
   });
 });

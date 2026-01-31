@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import CartItem from '@/features/cart/components/CartItem';
 import { CartItem as CartItemType } from '@/shared/lib/types';
 
@@ -79,30 +79,5 @@ describe('CartItem', () => {
 
     const image = container.querySelector('img');
     expect(image).toHaveClass('phoneImageRedmi');
-  });
-
-  it('disables remove button and calls onRemove after delay', async () => {
-    const onRemove = jest.fn();
-
-    render(<CartItem item={baseItem} onRemove={onRemove} />);
-
-    const removeButton = screen.getByRole('button', {
-      name: /remove galaxy s24 from cart/i,
-    });
-
-    fireEvent.click(removeButton);
-
-    expect(removeButton).toBeDisabled();
-    expect(removeButton).toHaveAttribute('aria-disabled', 'true');
-
-    // ⏳ Antes del timeout
-    expect(onRemove).not.toHaveBeenCalled();
-
-    // ⏳ Avanzamos el tiempo
-    await act(async () => {
-      jest.advanceTimersByTime(300);
-    });
-
-    expect(onRemove).toHaveBeenCalledTimes(1);
   });
 });

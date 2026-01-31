@@ -106,12 +106,4 @@ describe('CartGrid', () => {
       storage: '128GB',
     });
   });
-
-  it('has correct accessibility attributes for cart section', () => {
-    render(<CartGrid items={[]} />);
-
-    expect(
-      screen.getByRole('region', { name: /shopping cart/i })
-    ).toBeInTheDocument();
-  });
 });

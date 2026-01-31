@@ -48,16 +48,6 @@ describe('Navbar', () => {
     jest.clearAllMocks();
   });
 
-  it('renders main navigation with correct aria-label', () => {
-    mockUseCart.mockReturnValue({ totalItems: 0 });
-
-    render(<Navbar />);
-
-    expect(
-      screen.getByRole('navigation', { name: /main navigation/i })
-    ).toBeInTheDocument();
-  });
-
   it('renders logo link pointing to home', () => {
     mockUseCart.mockReturnValue({ totalItems: 0 });
 

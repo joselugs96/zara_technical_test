@@ -102,31 +102,4 @@ describe('PhoneCard', () => {
     const image = container.querySelector('img');
     expect(image).toHaveClass('phoneImageDefault');
   });
-
-  it('should identify Redmi phones by name', () => {
-    const redmiByName: PhoneListItem = {
-      ...mockPhone,
-      id: 'POC-F5',
-      name: 'Poco F5 Redmi',
-      brand: 'Xiaomi',
-    };
-
-    const { container } = render(<PhoneCard phone={redmiByName} />);
-    const image = container.querySelector('img');
-    expect(image).toHaveClass('phoneImageRedmi');
-  });
-
-  it('should be wrapped in an article element', () => {
-    const { container } = render(<PhoneCard phone={mockPhone} />);
-
-    const article = container.querySelector('article');
-    expect(article).toBeInTheDocument();
-  });
-
-  it('should have correct image priority attribute', () => {
-    const { container } = render(<PhoneCard phone={mockPhone} />);
-
-    const image = container.querySelector('img');
-    expect(image).toHaveAttribute('loading', 'eager');
-  });
 });

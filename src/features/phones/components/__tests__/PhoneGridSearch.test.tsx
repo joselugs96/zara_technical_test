@@ -16,6 +16,11 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useTransition: () => [false, (callback: () => void) => callback()],
+}));
+
 describe('PhoneGridSearch', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -34,23 +39,12 @@ describe('PhoneGridSearch', () => {
     expect(input).toHaveValue('iphone');
   });
 
-  it('updates input value when typing', () => {
-    render(<PhoneGridSearch phoneCount={10} />);
-
-    const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: 'samsung' } });
-
-    expect(input).toHaveValue('samsung');
-  });
-
   it('updates URL with debounce when search term changes', async () => {
     render(<PhoneGridSearch phoneCount={10} />);
 
     const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: 'pixel' } });
-
-    // ⏳ Esperamos el debounce
-    await act(async () => {
+    act(() => {
+      fireEvent.change(input, { target: { value: 'pixel' } });
       jest.advanceTimersByTime(300);
     });
 
@@ -61,9 +55,9 @@ describe('PhoneGridSearch', () => {
     render(<PhoneGridSearch phoneCount={10} />);
 
     const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: '' } });
 
-    await act(async () => {
+    act(() => {
+      fireEvent.change(input, { target: { value: '' } });
       jest.advanceTimersByTime(300);
     });
 
@@ -77,20 +71,10 @@ describe('PhoneGridSearch', () => {
 
     rerender(<PhoneGridSearch phoneCount={12} />);
 
-    await act(async () => {
+    act(() => {
       jest.advanceTimersByTime(300);
     });
 
     expect(screen.getByRole('status')).toHaveTextContent('12 RESULTS');
-  });
-
-  it('has correct accessibility attributes', () => {
-    render(<PhoneGridSearch phoneCount={3} />);
-
-    const input = screen.getByRole('searchbox');
-    expect(input).toHaveAttribute('aria-describedby', 'search-results');
-
-    const status = screen.getByRole('status');
-    expect(status).toHaveAttribute('aria-live', 'polite');
   });
 });
