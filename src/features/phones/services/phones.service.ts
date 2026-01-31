@@ -12,15 +12,15 @@ export async function getPhones(
   params: GetPhonesParams = {}
 ): Promise<PhoneListItem[]> {
   if (typeof window === 'undefined') {
-    return fetchPhonesFromUpstream(params);
+    return fetchPhonesFromUpstream(params ?? {});
   }
 
   const baseUrl = getClientBaseUrl();
   const url = new URL('/api/phones', baseUrl);
 
-  if (params.search) url.searchParams.set('search', params.search);
-  if (params.limit) url.searchParams.set('limit', String(params.limit));
-  if (params.offset) url.searchParams.set('offset', String(params.offset));
+  if (params?.search) url.searchParams.set('search', params.search);
+  if (params?.limit) url.searchParams.set('limit', String(params.limit));
+  if (params?.offset) url.searchParams.set('offset', String(params.offset));
 
   const res = await fetch(url.toString());
 

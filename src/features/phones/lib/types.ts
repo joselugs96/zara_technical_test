@@ -14,7 +14,7 @@ export interface GetPhonesParams {
   offset?: number;
 }
 
-interface Phone {
+export interface Phone {
   id: string;
   name: string;
   brand: string;
