@@ -5,6 +5,7 @@ import {
 } from '@/app/api/lib/upstreamFetch';
 
 import { GetPhonesParams, PhoneListItem } from '../lib/types';
+import { UpstreamError } from '@/app/api/lib/upstreamFetch';
 
 export async function fetchPhonesFromUpstream(
   params: GetPhonesParams
@@ -14,7 +15,7 @@ export async function fetchPhonesFromUpstream(
 
   const envError = validateEnvVars(baseUrl, apiKey);
   if (envError) {
-    throw new Error(envError.error);
+    throw new UpstreamError(envError.error, envError.status);
   }
 
   const upstreamUrl = new URL(buildUpstreamUrl(baseUrl!, '/products'));

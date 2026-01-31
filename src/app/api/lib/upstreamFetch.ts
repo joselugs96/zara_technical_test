@@ -1,6 +1,9 @@
-const DEFAULT_TIMEOUT_MS = 10_000;
+const DEFAULT_TIMEOUT_MS = 15_000;
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 500;
 
 import { UpstreamFetchOptions, UpstreamResponse } from './types';
+
 export class UpstreamError extends Error {
   status: number;
   isAbort: boolean;
@@ -40,55 +43,78 @@ export function validateEnvVars(
 export async function fetchFromUpstream(
   options: UpstreamFetchOptions
 ): Promise<UpstreamResponse> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
+  let lastError: UpstreamError | undefined;
 
-  try {
-    const res = await fetch(options.url, {
-      method: 'GET',
-      headers: {
-        'x-api-key': options.apiKey,
-        Accept: 'application/json',
-      },
-      cache: 'no-store',
-      signal: controller.signal,
-    });
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
 
-    const contentType = res.headers.get('content-type') ?? '';
-    const isJson = contentType.includes('application/json');
-
-    const body = isJson ? await res.json() : await res.text();
-
-    if (!res.ok) {
-      throw new UpstreamError('Upstream request failed', res.status, {
-        body,
+    try {
+      const res = await fetch(options.url, {
+        method: 'GET',
+        headers: {
+          'x-api-key': options.apiKey,
+          Accept: 'application/json',
+        },
+        cache: 'no-store',
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
+
+      const contentType = res.headers.get('content-type') ?? '';
+      const isJson = contentType.includes('application/json');
+
+      const body = isJson ? await res.json() : await res.text();
+
+      if (!res.ok) {
+        throw new UpstreamError('Upstream request failed', res.status, {
+          body,
+        });
+      }
+
+      return { body, isJson };
+    } catch (err: unknown) {
+      clearTimeout(timeoutId);
+
+      const isAbort = err instanceof Error && err.name === 'AbortError';
+
+      lastError =
+        err instanceof UpstreamError
+          ? err
+          : new UpstreamError(
+              isAbort ? 'Upstream request timed out' : 'Upstream request error',
+              isAbort ? 504 : 502,
+              { isAbort }
+            );
+
+      if (isAbort && attempt < MAX_RETRIES) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, RETRY_DELAY_MS * attempt)
+        );
+        continue;
+      }
+
+      if (attempt < MAX_RETRIES) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, RETRY_DELAY_MS * attempt)
+        );
+        continue;
+      }
+
+      console.error(
+        `${options.endpoint} API error (max retries ${MAX_RETRIES} exceeded):`,
+        {
+          isAbort: lastError.isAbort,
+          status: lastError.status,
+          message: lastError.message,
+          timestamp: new Date().toISOString(),
+        }
+      );
     }
-
-    return { body, isJson };
-  } catch (err: unknown) {
-    const isAbort = err instanceof Error && err.name === 'AbortError';
-
-    const error =
-      err instanceof UpstreamError
-        ? err
-        : new UpstreamError(
-            isAbort ? 'Upstream request timed out' : 'Upstream request error',
-            isAbort ? 504 : 502,
-            { isAbort }
-          );
-
-    console.error(`${options.endpoint} API error:`, {
-      isAbort: error.isAbort,
-      status: error.status,
-      message: error.message,
-      timestamp: new Date().toISOString(),
-    });
-
-    throw error;
-  } finally {
-    clearTimeout(timeoutId);
   }
+
+  throw lastError || new UpstreamError('Unknown error', 502);
 }
 
 export function buildUpstreamUrl(baseUrl: string, path: string): string {
