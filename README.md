@@ -135,6 +135,8 @@ The application uses **Next.js Route Handlers** as a thin proxy layer to interac
 - ✅ Keeps data-fetching logic isolated from UI components
 - ✅ Enables server-side validation and error handling
 
+To ensure robustness in real-world scenarios, upstream requests are protected with timeouts, controlled retries with backoff, and cache disabling. This prevents inconsistent behavior during SSR, cold starts, or transient upstream failures.
+
 **Environment variables required:**
 
 - `PHONES_API_BASE_URL`: Base URL of the upstream API
