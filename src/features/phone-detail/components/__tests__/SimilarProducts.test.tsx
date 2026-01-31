@@ -7,7 +7,12 @@ jest.mock('next/image', () => ({
   default: (props: Record<string, unknown>) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { fill, sizes, ...imgProps } = props;
-    return <img {...(imgProps as React.ImgHTMLAttributes<HTMLImageElement>)} />;
+    return (
+      <img
+        alt={String(imgProps.alt) || 'test image'}
+        {...(imgProps as React.ImgHTMLAttributes<HTMLImageElement>)}
+      />
+    );
   },
 }));
 

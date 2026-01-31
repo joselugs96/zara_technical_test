@@ -10,7 +10,12 @@ jest.mock('next/image', () => ({
     if (priority) {
       imgProps.loading = 'eager';
     }
-    return <img {...(imgProps as React.ImgHTMLAttributes<HTMLImageElement>)} />;
+    return (
+      <img
+        alt={String(imgProps.alt) || 'test image'}
+        {...(imgProps as React.ImgHTMLAttributes<HTMLImageElement>)}
+      />
+    );
   },
 }));
 
