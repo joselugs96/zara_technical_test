@@ -28,7 +28,6 @@ function PhoneCard({ phone }: PhoneCardProps) {
               isRedmi ? styles.phoneImageRedmi : styles.phoneImageDefault
             }
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority
           />
         </div>
 

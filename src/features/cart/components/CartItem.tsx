@@ -36,7 +36,6 @@ function CartItem({ item, onRemove }: CartItemProps) {
             className={
               isRedmi ? styles.phoneImageRedmi : styles.phoneImageDefault
             }
-            priority
           />
         ) : (
           <div
