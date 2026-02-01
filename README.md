@@ -139,6 +139,8 @@ The application uses **Next.js Route Handlers** as a thin proxy layer to interac
 
 To ensure robustness in real-world scenarios, upstream requests are protected with timeouts, controlled retries with backoff, and cache disabling. This prevents inconsistent behavior during SSR, cold starts, or transient upstream failures.
 
+The upstream API may return duplicated items. Responses are normalized client-side to ensure unique products by ID.
+
 **Environment variables required:**
 
 - `PHONES_API_BASE_URL`: Base URL of the upstream API
