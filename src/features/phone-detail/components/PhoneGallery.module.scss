@@ -62,15 +62,6 @@
   animation: blurPulse 0.4s ease-in-out;
 }
 
-.img {
-  opacity: 0;
-}
-
-.imgLoaded {
-  opacity: 1;
-  animation: blurPulse 0.4s ease-in-out;
-}
-
 @keyframes blurPulse {
   from {
     opacity: 0;

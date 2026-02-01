@@ -5,7 +5,6 @@ import { PhoneGalleryProps } from '@/features/phone-detail/lib/types';
 
 function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
   const [key, setKey] = useState(0);
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setKey((prev) => prev + 1);
@@ -32,7 +31,7 @@ function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
     >
       <Image
         key={key}
-        className={`${ imageClassName } ${loaded ? styles.imgLoaded : styles.img}`}
+        className={imageClassName}
         src={imageUrl}
         alt={`${brand} ${name} - Product view`}
         width={700}
@@ -40,7 +39,6 @@ function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
         quality={90}
         sizes="(max-width: 768px) 300px, (max-width: 1200px) 500px, 600px"
         priority
-        onLoad={() => setLoaded(true)}
       />
     </figure>
   );
