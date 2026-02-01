@@ -7,7 +7,7 @@ import { useLoading } from '@/shared/context/LoadingContext';
 import { ROUTES } from '@/shared/lib/routes';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.scss';
-import iconoZaraTest from '@/shared/assets/images/icono-zara-test.jpg';
+import iconoNapptilusTest from '@/shared/assets/images/icono-napptilus-test.jpg';
 import iconoCart from '@/shared/assets/images/icono-cart.jpg';
 
 function Navbar() {
@@ -22,7 +22,7 @@ function Navbar() {
         <Link
           href={ROUTES.home}
           className={styles.logoLink}
-          aria-label="Zara Technical Test - Home"
+          aria-label="Napptilus Technical Test - Home"
           onClick={(e) => {
             if (isHomePage) {
               e.preventDefault();
@@ -32,8 +32,8 @@ function Navbar() {
           }}
         >
           <Image
-            src={iconoZaraTest}
-            alt="Zara Technical Test Logo"
+            src={iconoNapptilusTest}
+            alt="Napptilus Technical Test Logo"
             width={80}
             height={80}
             priority
