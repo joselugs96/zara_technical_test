@@ -13,6 +13,7 @@ interface CartItemProps {
 function CartItem({ item, onRemove }: CartItemProps) {
   const isRedmi = item.name.toLowerCase().includes('redmi');
   const [isRemoving, setIsRemoving] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const handleRemove = () => {
     setIsRemoving(true);
@@ -33,9 +34,8 @@ function CartItem({ item, onRemove }: CartItemProps) {
             alt={`${item.name} - ${item.color}`}
             width={280}
             height={280}
-            className={
-              isRedmi ? styles.phoneImageRedmi : styles.phoneImageDefault
-            }
+            className={`${ isRedmi ? styles.phoneImageRedmi : styles.phoneImageDefault } ${loaded ? styles.imgLoaded : styles.img}`}
+            onLoad={() => setLoaded(true)}
           />
         ) : (
           <div

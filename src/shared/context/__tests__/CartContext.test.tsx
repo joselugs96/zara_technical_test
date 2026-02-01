@@ -122,7 +122,7 @@ describe('CartContext', () => {
       },
     ];
 
-    localStorage.setItem('napptilus_cart', JSON.stringify(storedItems));
+    localStorage.setItem('zara_cart', JSON.stringify(storedItems));
 
     await act(async () => {
       render(
@@ -146,7 +146,7 @@ describe('CartContext', () => {
 
     fireEvent.click(screen.getByText('Add iPhone'));
 
-    const stored = JSON.parse(localStorage.getItem('napptilus_cart') || '[]');
+    const stored = JSON.parse(localStorage.getItem('zara_cart') || '[]');
 
     expect(stored).toHaveLength(1);
     expect(stored[0].quantity).toBe(1);

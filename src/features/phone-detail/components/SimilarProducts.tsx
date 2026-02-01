@@ -7,9 +7,11 @@ import {
   SimilarProductsProps,
 } from '@/features/phone-detail/lib/types';
 import { ROUTES } from '@/shared/lib/routes';
+import { useState } from 'react';
 
 function SimilarProducts({ products }: SimilarProductsProps) {
   const { setIsLoading } = useLoading();
+  const [loaded, setLoaded] = useState(false);
 
   if (!products || products.length === 0) {
     return null;
@@ -50,8 +52,9 @@ function SimilarProducts({ products }: SimilarProductsProps) {
                     src={product.imageUrl}
                     alt={`${product.name} by ${product.brand}`}
                     fill
-                    className={getImageClassName(product)}
+                    className={`${ getImageClassName(product) } ${loaded ? styles.imgLoaded : styles.img}`}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    onLoad={() => setLoaded(true)}
                   />
                 </div>
 

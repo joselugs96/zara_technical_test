@@ -17,7 +17,7 @@ import {
 } from '@/shared/lib/types';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
-const CART_STORAGE_KEY = 'napptilus_cart';
+const CART_STORAGE_KEY = 'zara_cart';
 
 const isSameItem = (a: CartItemKey, b: CartItemKey) =>
   a.id === b.id && a.color === b.color && a.storage === b.storage;

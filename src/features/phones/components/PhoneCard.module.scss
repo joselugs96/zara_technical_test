@@ -32,7 +32,7 @@
     right: 0;
     height: 0;
     background-color: #000;
-    transition: height 0.4s ease;
+    transition: height 0.5s ease;
     z-index: 1;
     pointer-events: none;
   }
@@ -136,5 +136,25 @@
 
   .phoneCard:focus-visible .phoneCardContent & {
     color: #fff;
+  }
+}
+
+.img {
+  opacity: 0;
+}
+
+.imgLoaded {
+  opacity: 1;
+  animation: blurPulse 0.4s ease-in-out;
+}
+
+@keyframes blurPulse {
+  from {
+    opacity: 0;
+    filter: blur(15px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
   }
 }

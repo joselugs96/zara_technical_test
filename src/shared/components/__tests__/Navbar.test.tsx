@@ -59,7 +59,7 @@ describe('Navbar', () => {
     );
 
     const homeLink = screen.getByRole('link', {
-      name: /napptilus technical test - home/i,
+      name: /zara technical test - home/i,
     });
 
     expect(homeLink).toBeInTheDocument();
@@ -115,7 +115,7 @@ describe('Navbar', () => {
     );
 
     expect(
-      screen.getByAltText(/napptilus technical test logo/i)
+      screen.getByAltText(/zara technical test logo/i)
     ).toBeInTheDocument();
 
     expect(screen.getByAltText(/shopping cart icon/i)).toBeInTheDocument();

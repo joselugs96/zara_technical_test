@@ -5,7 +5,7 @@ import { CartProvider } from '@/shared/context/CartContext';
 import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 export const metadata: Metadata = {
-  title: 'Napptilus Technical Test - Phones Catalog',
+  title: 'Zara Technical Test - Phones Catalog',
   description: 'A catalog of phones built with Next.js, TypeScript, and SCSS.',
 };
 

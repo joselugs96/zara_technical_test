@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import { useLoading } from '@/shared/context/LoadingContext';
 import { PhoneCardProps } from '@/features/phones/lib/types';
 import { ROUTES } from '@/shared/lib/routes';
 import styles from './PhoneCard.module.scss';
 
 function PhoneCard({ phone }: PhoneCardProps) {
+  const [loaded, setLoaded] = useState(false);
   const { setIsLoading } = useLoading();
   const isRedmi =
     phone.brand.toLowerCase().includes('xiaomi') ||
@@ -24,10 +26,11 @@ function PhoneCard({ phone }: PhoneCardProps) {
             src={phone.imageUrl}
             alt={`${phone.brand} ${phone.name}`}
             fill
-            className={
+            className={`${
               isRedmi ? styles.phoneImageRedmi : styles.phoneImageDefault
-            }
+            } ${loaded ? styles.imgLoaded : styles.img}`}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onLoad={() => setLoaded(true)}
           />
         </div>
 

@@ -1,4 +1,4 @@
-# Napptilus Technical Test - Phone Store
+# Zara Technical Test - Phone Store
 
 A modern e-commerce application for browsing and purchasing phones, built with Next.js, React, and TypeScript. The application features server-side rendering, client-side cart management, and automated testing.
 
@@ -16,7 +16,7 @@ A modern e-commerce application for browsing and purchasing phones, built with N
 
    ```bash
    git clone <repository>
-   cd napptilus_technical_test
+   cd zara_technical_test
    npm install
    ```
 
