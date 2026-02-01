@@ -1,13 +1,19 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useCart } from '@/shared/context/CartContext';
 import CartGrid from '@/features/cart/components/CartGrid';
 import CartFooter from '@/features/cart/components/CartFooter';
 import styles from './page.module.scss';
+import { useLoading } from '@/shared/context/LoadingContext';
 
 function CartPage() {
+  const { setIsLoading } = useLoading();
   const { items, isHydrated } = useCart();
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   if (!isHydrated) {
     return (

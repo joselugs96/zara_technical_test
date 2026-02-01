@@ -3,14 +3,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/shared/context/CartContext';
+import { useLoading } from '@/shared/context/LoadingContext';
 import { ROUTES } from '@/shared/lib/routes';
+import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.scss';
 import iconoZaraTest from '@/shared/assets/images/icono-zara-test.jpg';
 import iconoCart from '@/shared/assets/images/icono-cart.jpg';
 
 function Navbar() {
   const { totalItems } = useCart();
-
+  const { isLoading, setIsLoading } = useLoading();
+  const pathname = usePathname();
+  const isCartPage = pathname === ROUTES.cart;
+  const isHomePage = pathname === ROUTES.home;
   return (
     <nav className={styles.navbar} aria-label="Main navigation">
       <div className={styles.navbarContainer}>
@@ -18,6 +23,13 @@ function Navbar() {
           href={ROUTES.home}
           className={styles.logoLink}
           aria-label="Zara Technical Test - Home"
+          onClick={(e) => {
+            if (isHomePage) {
+              e.preventDefault();
+            } else {
+              setIsLoading(true);
+            }
+          }}
         >
           <Image
             src={iconoZaraTest}
@@ -27,27 +39,40 @@ function Navbar() {
             priority
           />
         </Link>
-
-        <Link
-          href={ROUTES.cart}
-          className={styles.cartLink}
-          aria-label={`Shopping cart with ${totalItems} item${totalItems !== 1 ? 's' : ''}`}
-        >
-          <Image
-            src={iconoCart}
-            alt="Shopping cart icon"
-            width={45}
-            height={45}
-            priority
-          />
-          <span
-            className={styles.cartCount}
-            aria-hidden="false"
-            aria-label={`${totalItems} items in cart`}
+        <div className={styles.cartContainer}>
+          {isLoading && (
+            <div className={styles.loadingSpinner} aria-label="Loading" />
+          )}
+          <Link
+            href={ROUTES.cart}
+            className={styles.cartLink}
+            aria-label={`Shopping cart with ${totalItems} item${totalItems !== 1 ? 's' : ''}`}
+            onClick={(e) => {
+              if (isCartPage) {
+                e.preventDefault();
+              } else {
+                setIsLoading(true);
+              }
+            }}
           >
-            {totalItems}
-          </span>
-        </Link>
+            <div className={styles.cartIconWrapper}>
+              <Image
+                src={iconoCart}
+                alt="Shopping cart icon"
+                width={45}
+                height={45}
+                priority
+              />
+            </div>
+            <span
+              className={styles.cartCount}
+              aria-hidden="false"
+              aria-label={`${totalItems} items in cart`}
+            >
+              {totalItems}
+            </span>
+          </Link>
+        </div>
       </div>
     </nav>
   );

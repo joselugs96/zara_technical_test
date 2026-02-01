@@ -1,6 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
 import PhoneGrid from '@/features/phones/components/PhoneGrid';
 import { PhoneListItem } from '@/features/phones/lib/types';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 jest.mock('@/features/phones/components/PhoneCard', () => {
   return function MockPhoneCard({ phone }: { phone: PhoneListItem }) {
@@ -37,7 +38,11 @@ describe('PhoneGrid', () => {
   });
 
   it('renders phone catalog section', () => {
-    render(<PhoneGrid phones={phones} />);
+    render(
+      <LoadingProvider>
+        <PhoneGrid phones={phones} />
+      </LoadingProvider>
+    );
 
     expect(
       screen.getByRole('region', { name: /phone catalog/i })
@@ -45,7 +50,11 @@ describe('PhoneGrid', () => {
   });
 
   it('renders a list of phones when phones are provided', () => {
-    render(<PhoneGrid phones={phones} />);
+    render(
+      <LoadingProvider>
+        <PhoneGrid phones={phones} />
+      </LoadingProvider>
+    );
 
     const list = screen.getByRole('list', {
       name: /list of available phones/i,
@@ -59,7 +68,11 @@ describe('PhoneGrid', () => {
   });
 
   it('does not render list when phones array is empty', () => {
-    render(<PhoneGrid phones={[]} />);
+    render(
+      <LoadingProvider>
+        <PhoneGrid phones={[]} />
+      </LoadingProvider>
+    );
 
     expect(
       screen.queryByRole('list', {
@@ -69,7 +82,11 @@ describe('PhoneGrid', () => {
   });
 
   it('updates the list when phones length changes', async () => {
-    const { rerender } = render(<PhoneGrid phones={phones} />);
+    const { rerender } = render(
+      <LoadingProvider>
+        <PhoneGrid phones={phones} />
+      </LoadingProvider>
+    );
 
     const updatedPhones = [
       ...phones,
@@ -82,7 +99,11 @@ describe('PhoneGrid', () => {
       },
     ];
 
-    rerender(<PhoneGrid phones={updatedPhones} />);
+    rerender(
+      <LoadingProvider>
+        <PhoneGrid phones={updatedPhones} />
+      </LoadingProvider>
+    );
 
     await act(async () => {
       jest.advanceTimersByTime(300);

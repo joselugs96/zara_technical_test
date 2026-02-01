@@ -48,6 +48,7 @@ function PhoneGridSearch({ phoneCount }: PhoneGridSearchProps) {
       <input
         id="phone-search"
         type="search"
+        role="searchbox"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search for a smartphone..."

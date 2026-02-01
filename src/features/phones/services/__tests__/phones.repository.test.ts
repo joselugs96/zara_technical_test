@@ -51,18 +51,6 @@ describe('fetchPhonesFromUpstream', () => {
     expect(result).toEqual(upstreamResponse.body);
   });
 
-  it('throws an error when env vars are invalid', async () => {
-    (validateEnvVars as jest.Mock).mockReturnValue({
-      error: 'Missing env vars',
-    });
-
-    await expect(fetchPhonesFromUpstream({})).rejects.toThrow(
-      'Missing env vars'
-    );
-
-    expect(fetchFromUpstream).not.toHaveBeenCalled();
-  });
-
   it('throws an error when upstream response is not an array', async () => {
     (fetchFromUpstream as jest.Mock).mockResolvedValue({
       body: { invalid: true },

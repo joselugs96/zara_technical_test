@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLoading } from '@/shared/context/LoadingContext';
 import { PhoneCardProps } from '@/features/phones/lib/types';
 import { ROUTES } from '@/shared/lib/routes';
 import styles from './PhoneCard.module.scss';
 
 function PhoneCard({ phone }: PhoneCardProps) {
+  const { setIsLoading } = useLoading();
   const isRedmi =
     phone.brand.toLowerCase().includes('xiaomi') ||
     phone.name.toLowerCase().includes('redmi');
@@ -14,6 +16,7 @@ function PhoneCard({ phone }: PhoneCardProps) {
       href={ROUTES.phoneDetail(phone.id)}
       className={styles.phoneCard}
       aria-label={`${phone.brand} ${phone.name} - ${phone.basePrice} EUR - View details`}
+      onClick={() => setIsLoading(true)}
     >
       <article className={styles.phoneCardContent}>
         <div className={styles.phoneImage}>

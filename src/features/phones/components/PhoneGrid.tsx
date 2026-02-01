@@ -1,11 +1,13 @@
 'use client';
 
 import { Suspense, useState, useEffect, useRef } from 'react';
+import { useLoading } from '@/shared/context/LoadingContext';
 import { PhoneGridProps } from '@/features/phones/lib/types';
 import PhoneCard from './PhoneCard';
 import styles from './PhoneGrid.module.scss';
 
 function PhoneGridContent({ phones }: PhoneGridProps) {
+  const { setIsLoading } = useLoading();
   const [isVisible, setIsVisible] = useState(true);
   const [displayPhones, setDisplayPhones] = useState(phones);
   const isFirstRender = useRef(true);
@@ -28,6 +30,7 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
     const hideTimer = setTimeout(() => {
       setDisplayPhones(phones);
       setIsVisible(true);
+      setIsLoading(false);
 
       if (gridRef.current) {
         gridRef.current.setAttribute('aria-busy', 'false');
@@ -38,6 +41,10 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
 
     return () => clearTimeout(hideTimer);
   }, [phones]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   if (displayPhones.length === 0) {
     return null;

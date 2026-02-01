@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import CartFooter from '@/features/cart/components/CartFooter';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 jest.mock('next/link', () => {
   return function MockLink({
@@ -41,7 +42,11 @@ describe('CartFooter', () => {
       totalPrice: 0,
     });
 
-    render(<CartFooter />);
+    render(
+      <LoadingProvider>
+        <CartFooter />
+      </LoadingProvider>
+    );
 
     const link = screen.getByRole('link', {
       name: /continue shopping/i,
@@ -57,7 +62,11 @@ describe('CartFooter', () => {
       totalPrice: 2499,
     });
 
-    render(<CartFooter />);
+    render(
+      <LoadingProvider>
+        <CartFooter />
+      </LoadingProvider>
+    );
 
     const totalRegion = screen.getByRole('region', {
       name: /order total/i,

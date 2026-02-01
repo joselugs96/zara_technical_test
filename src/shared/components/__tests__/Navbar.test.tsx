@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Navbar from '@/shared/components/Navbar';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 jest.mock('next/image', () => ({
   __esModule: true,
@@ -51,7 +52,11 @@ describe('Navbar', () => {
   it('renders logo link pointing to home', () => {
     mockUseCart.mockReturnValue({ totalItems: 0 });
 
-    render(<Navbar />);
+    render(
+      <LoadingProvider>
+        <Navbar />
+      </LoadingProvider>
+    );
 
     const homeLink = screen.getByRole('link', {
       name: /zara technical test - home/i,
@@ -64,7 +69,11 @@ describe('Navbar', () => {
   it('renders cart link with correct aria-label and count', () => {
     mockUseCart.mockReturnValue({ totalItems: 3 });
 
-    render(<Navbar />);
+    render(
+      <LoadingProvider>
+        <Navbar />
+      </LoadingProvider>
+    );
 
     const cartLink = screen.getByRole('link', {
       name: /shopping cart with 3 items/i,
@@ -81,7 +90,11 @@ describe('Navbar', () => {
   it('handles singular item count correctly', () => {
     mockUseCart.mockReturnValue({ totalItems: 1 });
 
-    render(<Navbar />);
+    render(
+      <LoadingProvider>
+        <Navbar />
+      </LoadingProvider>
+    );
 
     expect(
       screen.getByRole('link', {
@@ -95,7 +108,11 @@ describe('Navbar', () => {
   it('renders both images with correct alt text', () => {
     mockUseCart.mockReturnValue({ totalItems: 0 });
 
-    render(<Navbar />);
+    render(
+      <LoadingProvider>
+        <Navbar />
+      </LoadingProvider>
+    );
 
     expect(
       screen.getByAltText(/zara technical test logo/i)

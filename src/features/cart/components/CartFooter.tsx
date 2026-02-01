@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { useCart } from '@/shared/context/CartContext';
 import styles from './CartFooter.module.scss';
 import { ROUTES } from '@/shared/lib/routes';
+import { useLoading } from '@/shared/context/LoadingContext';
 
 function CartFooter() {
+  const { setIsLoading } = useLoading();
   const { totalPrice, totalItems } = useCart();
   const hasItems = totalItems > 0;
 
@@ -13,6 +15,7 @@ function CartFooter() {
         href={ROUTES.home}
         className={styles.continueBtn}
         aria-label="Continue shopping - return to products"
+        onClick={() => setIsLoading(true)}
       >
         CONTINUE SHOPPING
       </Link>

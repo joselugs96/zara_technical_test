@@ -1,6 +1,7 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
+import { useLoading } from '@/shared/context/LoadingContext';
 import Link from 'next/link';
 import PhoneGallery from './PhoneGallery';
 import PhoneInfo from './PhoneInfo';
@@ -11,9 +12,14 @@ import styles from './PhoneDetailContent.module.scss';
 import { ROUTES } from '@/shared/lib/routes';
 
 function PhoneDetailContent({ phone }: PhoneDataProps) {
+  const { setIsLoading } = useLoading();
   const [selectedColorName, setSelectedColorName] = useState<string>(
     phone.colorOptions?.[0]?.name || ''
   );
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   const selectedColorImage =
     phone.colorOptions?.find((color) => color.name === selectedColorName)
@@ -38,6 +44,7 @@ function PhoneDetailContent({ phone }: PhoneDataProps) {
           href={ROUTES.home}
           className={styles.backButton}
           aria-label="Go back to products list"
+          onClick={() => setIsLoading(true)}
         >
           <svg
             className={styles.backIcon}

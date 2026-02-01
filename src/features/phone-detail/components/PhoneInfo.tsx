@@ -4,8 +4,10 @@ import styles from './PhoneInfo.module.scss';
 import { PhoneInfoProps } from '@/features/phone-detail/lib/types';
 import { useCart } from '@/shared/context/CartContext';
 import { ROUTES } from '@/shared/lib/routes';
+import { useLoading } from '@/shared/context/LoadingContext';
 
 function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
+  const { setIsLoading } = useLoading();
   const router = useRouter();
   const { addItem } = useCart();
   const [selectedStorage, setSelectedStorage] = useState<string>('');
@@ -33,6 +35,8 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
       const selectedColorOption = phone.colorOptions?.find(
         (color) => color.name === selectedColor
       );
+
+      setIsLoading(true);
 
       addItem({
         id: phone.id,
@@ -117,7 +121,7 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
         disabled={!isFullyConfigured}
         aria-disabled={!isFullyConfigured}
       >
-        AÑADIR
+        ADD TO CART
       </button>
     </section>
   );

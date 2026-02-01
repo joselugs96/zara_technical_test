@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import PhoneCard from '@/features/phones/components/PhoneCard';
 import { PhoneListItem } from '@/features/phones/lib/types';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 jest.mock('next/image', () => ({
   __esModule: true,
@@ -64,7 +65,11 @@ describe('PhoneCard', () => {
   };
 
   it('should render phone card with correct information', () => {
-    render(<PhoneCard phone={mockPhone} />);
+    render(
+      <LoadingProvider>
+        <PhoneCard phone={mockPhone} />
+      </LoadingProvider>
+    );
 
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('href', '/phone/SMG-S24U');
@@ -74,7 +79,11 @@ describe('PhoneCard', () => {
   });
 
   it('should render image with correct alt text', () => {
-    render(<PhoneCard phone={mockPhone} />);
+    render(
+      <LoadingProvider>
+        <PhoneCard phone={mockPhone} />
+      </LoadingProvider>
+    );
 
     const image = screen.getByAltText('Samsung Galaxy S24 Ultra');
     expect(image).toBeInTheDocument();
@@ -85,7 +94,11 @@ describe('PhoneCard', () => {
   });
 
   it('should have correct accessibility label', () => {
-    render(<PhoneCard phone={mockPhone} />);
+    render(
+      <LoadingProvider>
+        <PhoneCard phone={mockPhone} />
+      </LoadingProvider>
+    );
 
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute(
@@ -95,14 +108,22 @@ describe('PhoneCard', () => {
   });
 
   it('should render with Redmi-specific image class for Xiaomi phones', () => {
-    const { container } = render(<PhoneCard phone={mockRedmiPhone} />);
+    const { container } = render(
+      <LoadingProvider>
+        <PhoneCard phone={mockRedmiPhone} />
+      </LoadingProvider>
+    );
 
     const image = container.querySelector('img');
     expect(image).toHaveClass('phoneImageRedmi');
   });
 
   it('should render with default image class for non-Redmi phones', () => {
-    const { container } = render(<PhoneCard phone={mockPhone} />);
+    const { container } = render(
+      <LoadingProvider>
+        <PhoneCard phone={mockPhone} />
+      </LoadingProvider>
+    );
 
     const image = container.querySelector('img');
     expect(image).toHaveClass('phoneImageDefault');

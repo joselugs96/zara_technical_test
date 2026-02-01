@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/styles/globals.scss';
 import Navbar from '@/shared/components/Navbar';
 import { CartProvider } from '@/shared/context/CartContext';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 export const metadata: Metadata = {
   title: 'Zara Technical Test - Phones Catalog',
@@ -17,8 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="container">
         <CartProvider>
-          <Navbar />
-          {children}
+          <LoadingProvider>
+            <Navbar />
+            {children}
+          </LoadingProvider>
         </CartProvider>
       </body>
     </html>

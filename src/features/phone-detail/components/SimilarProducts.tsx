@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SimilarProducts.module.scss';
+import { useLoading } from '@/shared/context/LoadingContext';
 import {
   SimilarProduct,
   SimilarProductsProps,
@@ -8,6 +9,8 @@ import {
 import { ROUTES } from '@/shared/lib/routes';
 
 function SimilarProducts({ products }: SimilarProductsProps) {
+  const { setIsLoading } = useLoading();
+
   if (!products || products.length === 0) {
     return null;
   }
@@ -39,6 +42,7 @@ function SimilarProducts({ products }: SimilarProductsProps) {
               href={ROUTES.phoneDetail(product.id)}
               className={styles.productCard}
               aria-label={`${product.brand} ${product.name} - ${product.basePrice} EUR`}
+              onClick={() => setIsLoading(true)}
             >
               <article className={styles.productsContent}>
                 <div className={styles.imageWrapper}>

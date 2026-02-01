@@ -24,6 +24,7 @@ export interface Phone {
 
 export interface PhoneGridProps {
   phones: Phone[];
+  search?: string;
 }
 
 export interface PhoneGridSearchProps {

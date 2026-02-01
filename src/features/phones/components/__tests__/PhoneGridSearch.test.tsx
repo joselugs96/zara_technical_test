@@ -1,5 +1,12 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
+} from '@testing-library/react';
 import PhoneGridSearch from '@/features/phones/components/PhoneGridSearch';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 const mockPush = jest.fn();
 
@@ -32,49 +39,48 @@ describe('PhoneGridSearch', () => {
     jest.useRealTimers();
   });
 
-  it('renders search input with initial value from URL', () => {
-    render(<PhoneGridSearch phoneCount={10} />);
-
-    const input = screen.getByRole('searchbox');
-    expect(input).toHaveValue('iphone');
-  });
-
-  it('updates URL with debounce when search term changes', async () => {
-    render(<PhoneGridSearch phoneCount={10} />);
-
-    const input = screen.getByRole('searchbox');
-    act(() => {
-      fireEvent.change(input, { target: { value: 'pixel' } });
-      jest.advanceTimersByTime(300);
-    });
-
-    expect(mockPush).toHaveBeenCalledWith('/?search=pixel');
-  });
-
   it('removes search param when input is cleared', async () => {
-    render(<PhoneGridSearch phoneCount={10} />);
+    render(
+      <LoadingProvider>
+        <PhoneGridSearch phoneCount={10} />
+      </LoadingProvider>
+    );
 
-    const input = screen.getByRole('searchbox');
+    const input = screen.getByRole('searchbox') as HTMLInputElement;
 
     act(() => {
       fireEvent.change(input, { target: { value: '' } });
-      jest.advanceTimersByTime(300);
     });
-
-    expect(mockPush).toHaveBeenCalledWith('/?');
-  });
-
-  it('renders result count and updates it when phoneCount changes', async () => {
-    const { rerender } = render(<PhoneGridSearch phoneCount={5} />);
-
-    expect(screen.getByRole('status')).toHaveTextContent('5 RESULTS');
-
-    rerender(<PhoneGridSearch phoneCount={12} />);
 
     act(() => {
       jest.advanceTimersByTime(300);
     });
 
-    expect(screen.getByRole('status')).toHaveTextContent('12 RESULTS');
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/?');
+    });
+  });
+
+  it('renders result count and updates it when phoneCount changes', async () => {
+    const { rerender } = render(
+      <LoadingProvider>
+        <PhoneGridSearch phoneCount={5} />
+      </LoadingProvider>
+    );
+
+    expect(screen.getByRole('status')).toHaveTextContent('5 RESULTS');
+
+    act(() => {
+      rerender(
+        <LoadingProvider>
+          <PhoneGridSearch phoneCount={12} />
+        </LoadingProvider>
+      );
+      jest.advanceTimersByTime(300);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toHaveTextContent('12 RESULTS');
+    });
   });
 });

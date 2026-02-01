@@ -145,11 +145,11 @@ To ensure robustness in real-world scenarios, upstream requests are protected wi
 - `PHONES_API_KEY`: API authentication key
 
 **Optional (with defaults):**
+
 - `NEXT_PUBLIC_API_URL`: Internal API URL for server-side rendering and client requests
   - **Development**: `http://localhost:3000` (default)
   - **Docker**: `http://app:3000` (service name in docker-compose)
   - **Production**: Configure based on your deployment environment
-
 
 See `.env.example` for details.
 
@@ -182,10 +182,10 @@ The application leverages Next.js App Router features to ensure good performance
 
 | Area            | Coverage | Status |
 | --------------- | -------- | ------ |
-| **Overall**     | 90.12%   | ✅     |
-| Components      | 98.97%   | ✅     |
-| Services        | 87.31%   | ✅     |
-| Hooks & Context | 97.27%   | ✅     |
+| **Overall**     | 96.75%   | ✅     |
+| Components      | 98.78%   | ✅     |
+| Services        | 91.27%   | ✅     |
+| Hooks & Context | 95.33%   | ✅     |
 
 The project includes automated tests implemented with **Jest** and **React Testing Library**, focusing on the most relevant parts of the application.
 

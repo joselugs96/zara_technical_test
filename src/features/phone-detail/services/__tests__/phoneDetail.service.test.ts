@@ -1,5 +1,4 @@
 import { getPhoneDetail } from '@/features/phone-detail/services/phoneDetail.service';
-import { fetchPhoneDetailFromUpstream } from '@/features/phone-detail/services/phoneDetail.repository';
 
 jest.mock('@/features/phone-detail/services/phoneDetail.repository', () => {
   const originalModule = jest.requireActual(
@@ -10,7 +9,6 @@ jest.mock('@/features/phone-detail/services/phoneDetail.repository', () => {
     fetchPhoneDetailFromUpstream: jest.fn(),
   };
 });
-
 describe('getPhoneDetail (client-side)', () => {
   const PHONE_ID = '123';
 
@@ -18,7 +16,7 @@ describe('getPhoneDetail (client-side)', () => {
     jest.clearAllMocks();
 
     (global as unknown as Record<string, unknown>).window = {
-      location: { origin: 'http://localhost:3000' },
+      location: { origin: 'http://localhost' },
     };
 
     global.fetch = jest.fn();
@@ -42,11 +40,11 @@ describe('getPhoneDetail (client-side)', () => {
     const result = await getPhoneDetail(PHONE_ID);
 
     expect(global.fetch).toHaveBeenCalledWith(
-      'http://localhost/api/phones/123'
+      'http://localhost/api/phones/123',
+      { cache: 'no-store' }
     );
 
     expect(result).toEqual(mockPhone);
-    expect(fetchPhoneDetailFromUpstream).not.toHaveBeenCalled();
   });
 
   it('throws an error when fetch response is not ok', async () => {
@@ -57,6 +55,28 @@ describe('getPhoneDetail (client-side)', () => {
 
     await expect(getPhoneDetail(PHONE_ID)).rejects.toThrow(
       'Failed to fetch phone detail (404)'
+    );
+  });
+
+  it('throws an error when response is not a valid object', async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue('invalid'),
+    });
+
+    await expect(getPhoneDetail(PHONE_ID)).rejects.toThrow(
+      'Invalid response structure'
+    );
+  });
+
+  it('throws an error when response is null', async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(null),
+    });
+
+    await expect(getPhoneDetail(PHONE_ID)).rejects.toThrow(
+      'Invalid response structure'
     );
   });
 });

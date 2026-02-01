@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import SimilarProducts from '@/features/phone-detail/components/SimilarProducts';
 import { SimilarProduct } from '@/features/phone-detail/lib/types';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 jest.mock('next/image', () => ({
   __esModule: true,
@@ -81,20 +82,32 @@ describe('SimilarProducts', () => {
   ];
 
   it('should return null when products array is empty', () => {
-    const { container } = render(<SimilarProducts products={[]} />);
+    const { container } = render(
+      <LoadingProvider>
+        <SimilarProducts products={[]} />
+      </LoadingProvider>
+    );
 
     expect(container.firstChild).toBeNull();
   });
 
   it('should render all products as list items', () => {
-    render(<SimilarProducts products={mockProducts} />);
+    render(
+      <LoadingProvider>
+        <SimilarProducts products={mockProducts} />
+      </LoadingProvider>
+    );
 
     const listItems = screen.getAllByRole('listitem');
     expect(listItems).toHaveLength(5);
   });
 
   it('should render product link with correct href', () => {
-    render(<SimilarProducts products={mockProducts} />);
+    render(
+      <LoadingProvider>
+        <SimilarProducts products={mockProducts} />
+      </LoadingProvider>
+    );
 
     const link = screen.getByRole('link', {
       name: /OPPO Reno 11 F - 269 EUR/i,
@@ -127,7 +140,11 @@ describe('SimilarProducts', () => {
       },
     ];
 
-    render(<SimilarProducts products={duplicateProducts} />);
+    render(
+      <LoadingProvider>
+        <SimilarProducts products={duplicateProducts} />
+      </LoadingProvider>
+    );
 
     const listItems = screen.getAllByRole('listitem');
     expect(listItems).toHaveLength(2); // Only 2 unique products
@@ -144,7 +161,11 @@ describe('SimilarProducts', () => {
       },
     ];
 
-    const { container } = render(<SimilarProducts products={xiaomiProducts} />);
+    const { container } = render(
+      <LoadingProvider>
+        <SimilarProducts products={xiaomiProducts} />
+      </LoadingProvider>
+    );
 
     const image = container.querySelector('img');
     expect(image).toHaveClass('phoneImageRedmi');
@@ -161,7 +182,11 @@ describe('SimilarProducts', () => {
       },
     ];
 
-    const { container } = render(<SimilarProducts products={redmiProducts} />);
+    const { container } = render(
+      <LoadingProvider>
+        <SimilarProducts products={redmiProducts} />
+      </LoadingProvider>
+    );
 
     const image = container.querySelector('img');
     expect(image).toHaveClass('phoneImageRedmi');

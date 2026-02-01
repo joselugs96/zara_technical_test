@@ -3,6 +3,7 @@ import PhoneInfo from '@/features/phone-detail/components/PhoneInfo';
 import { PhoneDetail } from '@/features/phone-detail/lib/types';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/shared/context/CartContext';
+import { LoadingProvider } from '@/shared/context/LoadingContext';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -78,7 +79,9 @@ describe('PhoneInfo', () => {
   describe('Rendering', () => {
     it('should render section with productInfo class', () => {
       const { container } = render(
-        <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
       );
 
       const section = container.querySelector('section.productInfo');
@@ -88,7 +91,11 @@ describe('PhoneInfo', () => {
 
   describe('Storage Selection', () => {
     it('should select storage option on click', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
@@ -99,7 +106,11 @@ describe('PhoneInfo', () => {
     });
 
     it('should mark selected storage with active class', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
@@ -110,7 +121,11 @@ describe('PhoneInfo', () => {
     });
 
     it('should update price when storage option is selected', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storage256Button = screen.getByRole('button', {
         name: /256 GB storage option/i,
@@ -121,7 +136,11 @@ describe('PhoneInfo', () => {
     });
 
     it('should toggle storage selection', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storage128Button = screen.getByRole('button', {
         name: /128 GB storage option/i,
@@ -139,7 +158,11 @@ describe('PhoneInfo', () => {
     });
 
     it('should use storage option price when selected', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storage128Button = screen.getByRole('button', {
         name: /128 GB storage option/i,
@@ -152,7 +175,11 @@ describe('PhoneInfo', () => {
 
   describe('Color Selection', () => {
     it('should select color option on click', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const colorButton = screen.getByLabelText('Color: Azul');
       fireEvent.click(colorButton);
@@ -163,21 +190,29 @@ describe('PhoneInfo', () => {
 
   describe('Add to Cart Button', () => {
     it('should disable add to cart button initially', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
       expect(addButton).toBeDisabled();
       expect(addButton).toHaveAttribute('aria-disabled', 'true');
     });
 
     it('should enable button when both storage and color are selected', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
       });
       const colorButton = screen.getByLabelText('Color: Negro');
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
 
       fireEvent.click(storageButton);
       expect(addButton).toBeDisabled();
@@ -188,12 +223,16 @@ describe('PhoneInfo', () => {
     });
 
     it('should not enable button if only storage is selected', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
       });
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
 
       fireEvent.click(storageButton);
 
@@ -201,10 +240,14 @@ describe('PhoneInfo', () => {
     });
 
     it('should not enable button if only color is selected', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const colorButton = screen.getByLabelText('Color: Negro');
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
 
       fireEvent.click(colorButton);
 
@@ -214,13 +257,17 @@ describe('PhoneInfo', () => {
 
   describe('Add to Cart Functionality', () => {
     it('should add item to cart with correct data', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
       });
       const colorButton = screen.getByLabelText('Color: Negro');
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
 
       fireEvent.click(storageButton);
       fireEvent.click(colorButton);
@@ -238,13 +285,17 @@ describe('PhoneInfo', () => {
     });
 
     it('should redirect to cart after adding item', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
       });
       const colorButton = screen.getByLabelText('Color: Negro');
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
 
       fireEvent.click(storageButton);
       fireEvent.click(colorButton);
@@ -254,13 +305,17 @@ describe('PhoneInfo', () => {
     });
 
     it('should use selected color image URL', () => {
-      render(<PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />);
+      render(
+        <LoadingProvider>
+          <PhoneInfo phone={mockPhone} onColorChange={mockOnColorChange} />
+        </LoadingProvider>
+      );
 
       const storageButton = screen.getByRole('button', {
         name: /128 GB storage option/i,
       });
       const colorButton = screen.getByLabelText('Color: Azul');
-      const addButton = screen.getByRole('button', { name: 'AÑADIR' });
+      const addButton = screen.getByRole('button', { name: 'ADD TO CART' });
 
       fireEvent.click(storageButton);
       fireEvent.click(colorButton);
