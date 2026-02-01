@@ -61,8 +61,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (stored) {
         dispatch({ type: 'LOAD_FROM_STORAGE', payload: JSON.parse(stored) });
       }
-    } catch (error) {
-      console.error('Error loading cart:', error);
     } finally {
       setIsHydrated(true);
     }

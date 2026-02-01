@@ -1,14 +1,19 @@
 import { PhoneDetail } from '../lib/types';
-import { fetchPhoneDetailFromUpstream } from './phoneDetail.repository';
+
+function getApiBaseUrl(): string {
+  if (typeof window === 'undefined') {
+    return process.env.NEXT_PUBLIC_API_URL || `http://localhost:3000`;
+  }
+  return window.location.origin;
+}
 
 export async function getPhoneDetail(id: string): Promise<PhoneDetail> {
-  if (typeof window === 'undefined') {
-    return fetchPhoneDetailFromUpstream(id);
-  }
+  const baseUrl = getApiBaseUrl();
+  const url = new URL(`/api/phones/${id}`, baseUrl);
 
-  const url = new URL(`/api/phones/${id}`, window.location.origin);
-
-  const res = await fetch(url.toString());
+  const res = await fetch(url.toString(), {
+    cache: 'no-store',
+  });
 
   if (!res.ok) {
     throw new Error(`Failed to fetch phone detail (${res.status})`);

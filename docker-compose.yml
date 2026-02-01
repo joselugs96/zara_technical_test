@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -7,8 +5,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://app:3000
       - NEXT_TELEMETRY_DISABLED=1
     restart: unless-stopped
     healthcheck:
@@ -17,20 +18,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 5s
-
-  dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    ports:
-      - '3001:3000'
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
-    environment:
-      - NODE_ENV=development
-    restart: unless-stopped
-
-volumes:
-  node_modules:

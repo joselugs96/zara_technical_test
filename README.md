@@ -24,7 +24,9 @@ A modern e-commerce application for browsing and purchasing phones, built with N
 
    ```bash
    cp .env.example .env.local
-   # Edit .env.local with your API credentials
+   # If running with Docker, also copy to .env (used by docker-compose)
+   cp .env.example .env
+   # The API credentials are already provided; no changes are required
    ```
 
 3. **Run development server:**
@@ -141,6 +143,13 @@ To ensure robustness in real-world scenarios, upstream requests are protected wi
 
 - `PHONES_API_BASE_URL`: Base URL of the upstream API
 - `PHONES_API_KEY`: API authentication key
+
+**Optional (with defaults):**
+- `NEXT_PUBLIC_API_URL`: Internal API URL for server-side rendering and client requests
+  - **Development**: `http://localhost:3000` (default)
+  - **Docker**: `http://app:3000` (service name in docker-compose)
+  - **Production**: Configure based on your deployment environment
+
 
 See `.env.example` for details.
 

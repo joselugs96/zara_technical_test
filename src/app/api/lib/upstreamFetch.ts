@@ -101,16 +101,6 @@ export async function fetchFromUpstream(
         );
         continue;
       }
-
-      console.error(
-        `${options.endpoint} API error (max retries ${MAX_RETRIES} exceeded):`,
-        {
-          isAbort: lastError.isAbort,
-          status: lastError.status,
-          message: lastError.message,
-          timestamp: new Date().toISOString(),
-        }
-      );
     }
   }
 
