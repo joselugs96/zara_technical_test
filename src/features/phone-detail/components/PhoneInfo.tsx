@@ -12,6 +12,7 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
   const { addItem } = useCart();
   const [selectedStorage, setSelectedStorage] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
+  const [hoveredColor, setHoveredColor] = useState<string>('');
 
   const isFullyConfigured = selectedStorage !== '' && selectedColor !== '';
 
@@ -106,12 +107,19 @@ function PhoneInfo({ phone, onColorChange }: PhoneInfoProps) {
                 }`}
                 style={{ backgroundColor: color.hexCode }}
                 onClick={() => handleColorChange(color.name)}
+                onMouseEnter={() => setHoveredColor(color.name)}
+                onMouseLeave={() => setHoveredColor('')}
                 aria-label={`Color: ${color.name}`}
                 aria-pressed={selectedColor === color.name}
                 title={`Select ${color.name} color`}
               />
             ))}
           </div>
+          <p
+            className={`${styles.selectedColorDisplay} ${hoveredColor || selectedColor ? styles.visible : ''}`}
+          >
+            {hoveredColor || selectedColor || ''}
+          </p>
         </div>
       )}
 

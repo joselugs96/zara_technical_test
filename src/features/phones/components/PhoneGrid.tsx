@@ -44,7 +44,7 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
 
   useEffect(() => {
     setIsLoading(false);
-  }, [setIsLoading]);
+  }, []);
 
   if (displayPhones.length === 0) {
     return null;
