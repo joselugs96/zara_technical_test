@@ -40,11 +40,11 @@ function PhoneGridContent({ phones }: PhoneGridProps) {
     previousLength.current = phones.length;
 
     return () => clearTimeout(hideTimer);
-  }, [phones]);
+  }, [phones, setIsLoading]);
 
   useEffect(() => {
     setIsLoading(false);
-  }, []);
+  }, [setIsLoading]);
 
   if (displayPhones.length === 0) {
     return null;
