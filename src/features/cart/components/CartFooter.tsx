@@ -44,7 +44,7 @@ function CartFooter() {
         aria-disabled={!hasItems}
         aria-label={
           hasItems
-            ? `Proceed to payment - Total: ${totalPrice} EUR`
+            ? `Proceed to payment - Total: ${totalPrice.toFixed(2)} EUR`
             : 'Add items to cart to proceed to payment'
         }
       >

@@ -75,10 +75,10 @@ describe('CartFooter', () => {
     expect(totalRegion).toBeInTheDocument();
     expect(totalRegion).toHaveAttribute('aria-hidden', 'false');
 
-    expect(screen.getByText('2499 EUR')).toBeInTheDocument();
+    expect(screen.getByText('2499.00 EUR')).toBeInTheDocument();
 
     const payButton = screen.getByRole('button', {
-      name: /proceed to payment - total: 2499 eur/i,
+      name: /proceed to payment - total: 2499.00 eur/i,
     });
 
     expect(payButton).toBeEnabled();
