@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { PhoneGalleryProps } from '@/features/phone-detail/lib/types';
 
 function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
+  const [key, setKey] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setLoaded(false);
+    setKey((prev) => prev + 1);
   }, [imageUrl]);
 
   const isRedmi =
@@ -30,6 +31,7 @@ function PhoneGallery({ imageUrl, brand, name }: PhoneGalleryProps) {
       aria-label={`${brand} ${name} product image`}
     >
       <Image
+        key={key}
         className={`${imageClassName} ${loaded ? styles.imgLoaded : styles.img}`}
         src={imageUrl}
         alt={`${brand} ${name} - Product view`}
