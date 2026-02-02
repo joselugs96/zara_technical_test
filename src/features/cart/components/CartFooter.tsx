@@ -34,7 +34,7 @@ function CartFooter() {
           aria-labelledby="total-label"
           aria-live="polite"
         >
-          {totalPrice} EUR
+          {totalPrice.toFixed(2)} EUR
         </span>
       </div>
 
