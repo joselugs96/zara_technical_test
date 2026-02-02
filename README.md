@@ -62,12 +62,13 @@ A modern e-commerce application for browsing and purchasing phones, built with N
 
    Starts the application on `http://localhost:3000` (port configurable via `PORT` env var).
 
-3. **Using Docker:**
+3. **Docker (Optional):**
+
+   A Docker setup is included to demonstrate how the application could be containerized in a production environment.
 
    ```bash
    docker-compose up --build
    ```
-
 ## Features
 
 - ✅ **Product Browsing**: Search and filter phones
